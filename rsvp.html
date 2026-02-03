@@ -89,6 +89,12 @@
                         </div>
                     </div>
 
+                    <!-- Email for confirmation -->
+                    <div class="form-group" style="margin-top: 1.5rem;">
+                        <label for="guestEmail">Email (for confirmation)</label>
+                        <input type="email" id="guestEmail" name="guestEmail" required autocomplete="email" placeholder="your@email.com">
+                    </div>
+
                     <button type="submit" class="btn" id="submit-btn">Submit RSVP</button>
                 </form>
 
@@ -205,6 +211,7 @@
             const guestResponse = document.querySelector('input[name="guestResponse"]:checked').value;
             const plusOneResponseEl = document.querySelector('input[name="plusOneResponse"]:checked');
             const plusOneResponse = plusOneResponseEl ? plusOneResponseEl.value : '';
+            const guestEmail = document.getElementById('guestEmail').value.trim();
 
             try {
                 const params = new URLSearchParams({
@@ -212,7 +219,8 @@
                     firstName: currentGuest.firstName,
                     lastName: currentGuest.lastName,
                     response: guestResponse,
-                    plusOneResponse: plusOneResponse
+                    plusOneResponse: plusOneResponse,
+                    email: guestEmail
                 });
 
                 const response = await fetch(`${API_URL}?${params.toString()}`);

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Things To Do | Emily & Simo</title>
+    <script src="auth.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <a href="index.html" class="logo">Emily & Simo</a>
+        <nav class="nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="our-story.html">Our Story</a></li>
+                <li><a href="travel.html">Travel</a></li>
+                <li><a href="things-to-do.html" class="active">Things To Do</a></li>
+                <li><a href="registry.html">Registry</a></li>
+                <li><a href="faqs.html">FAQs</a></li>
+                <li><a href="rsvp.html" class="nav-rsvp">RSVP</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="page-content" style="max-width: 1000px;">
+            <h1>Things To Do</h1>
+
+            <p class="page-intro">Below are a few of our favorite places.</p>
+
+            <div class="card-grid">
+                <div class="section-card" data-image style="--bg-image: url('Website Photos/Things To Do Photos/Alberti.JPG')">
+                    <h2 class="section-title">Libreria Alberti</h2>
+                    <p class="place-address">14/15 Piazza San Vittore, Intra</p>
+                    <p>Need a gift to bring home? May we suggest the family bookstore? Founded by Simo's grandfather in 1954, here you will find a plethora of books and gifts for the whole family. There is also a second location located in Stresa.</p>
+                </div>
+
+                <div class="section-card" data-image style="--bg-image: url('Website Photos/Things To Do Photos/Isole Borromeo.jpg')">
+                    <h2 class="section-title">Borromeo Island Tour</h2>
+                    <p>Isola Bella is an absolute must, but we recommend checking out all the islands while in town. Tickets can be bought at the Stresa harbor or booked online in advance.</p>
+                </div>
+
+                <div class="section-card" data-image style="--bg-image: url('Website Photos/Things To Do Photos/Ittico.jpg')">
+                    <h2 class="section-title">Ittico Fish Bar</h2>
+                    <p class="place-address">17 Viale Vittorio Tonolli, Pallanza</p>
+                    <p>Where we spend most of our evenings for aperitivo! Ittico has undeniable lake views and immaculate vibes.</p>
+                </div>
+
+                <div class="section-card" data-image style="--bg-image: url('Website Photos/Things To Do Photos/Casera.jpg')">
+                    <h2 class="section-title">La Casera</h2>
+                    <p class="place-address">Piazza Daniele Ranzoni 19, Verbania</p>
+                    <p>While everything here is to die for, we recommend the 'i taglieri' because it's perfect for sampling a little of all the meats and cheeses.</p>
+                </div>
+
+                <div class="section-card" data-image style="--bg-image: url('Website Photos/Things To Do Photos/Dali.jpg')">
+                    <h2 class="section-title">Dali – Ristorante Pizzeria Lounge Bar</h2>
+                    <p class="place-address">32 Corso Goffredo Mameli, Intra</p>
+                    <p>This is our favorite place for a cappuccino and croissant. The views are everything here!</p>
+                </div>
+
+                <div class="section-card" data-image style="--bg-image: url('Website Photos/Things To Do Photos/Gelateria.jpg')">
+                    <h2 class="section-title">Gelato d'Altri Tempi</h2>
+                    <p class="place-address">38 Via San Fabiano, Intra</p>
+                    <p>By Italian law, you must enjoy one gelato a day! This is our favorite spot, but honestly, you can't go wrong anywhere you wander.</p>
+                </div>
+
+                <div class="section-card" data-image style="--bg-image: url('Website Photos/Things To Do Photos/Skybar.jpg')">
+                    <h2 class="section-title">Sky Bar at Hotel La Palma</h2>
+                    <p class="place-address">33 Corso Umberto I, Stresa</p>
+                    <p>The views are breathtaking, especially at sunset! A reservation is recommended, but not required.</p>
+                </div>
+            </div>
+
+            <a href="https://maps.app.goo.gl/UB126QCw8yiMn2ga7" target="_blank" class="map-preview">
+                <div class="map-preview-embed">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d55000!2d8.54!3d45.88!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sit!4v1600000000000"
+                        width="100%"
+                        height="100%"
+                        style="border:0; pointer-events:none;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    <div class="map-preview-overlay"></div>
+                </div>
+                <div class="map-preview-content">
+                    <span class="explore-text">More Places to Explore</span>
+                    <span class="explore-subtext">View our full collection on Google Maps</span>
+                </div>
+                <svg class="explore-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p class="footer-names">Emily & Simo</p>
+        <p class="footer-details">July 24, 2026 · Stresa, Italy</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story | Emily & Simo</title>
+    <script src="auth.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <a href="index.html" class="logo">Emily & Simo</a>
+        <nav class="nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="our-story.html" class="active">Our Story</a></li>
+                <li><a href="travel.html">Travel</a></li>
+                <li><a href="things-to-do.html">Things To Do</a></li>
+                <li><a href="registry.html">Registry</a></li>
+                <li><a href="faqs.html">FAQs</a></li>
+                <li><a href="rsvp.html" class="nav-rsvp">RSVP</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="page-content" style="max-width: 900px;">
+            <h1>Our Story</h1>
+
+            <div class="story-content">
+                <p>It all began when Emily's childhood friend Alyssa moved to San Francisco and ended up living with a group of strangers she found on Craigslist, one of whom happened to be Simo. One night, while Emily and Alyssa were out with friends, Simo decided to join. And just like that, the rest is (kind of) history.</p>
+
+                <p>Emily and Simo spent years as "just friends," often wondering if there might be something more. After three years of perfectly timed almosts, they finally decided to give dating a real shot and it quickly became clear they had something special!</p>
+
+                <p>Together they've traveled to many new places, cherished long summers in Italy with Simo's family, and put down roots in San Francisco by purchasing their first home together, a milestone that made the city they love feel even more like home.</p>
+
+                <p>Four years later, they're tying the knot and couldn't be more excited to celebrate this moment with the people they love most.</p>
+            </div>
+
+            <div class="photo-mosaic">
+                <div class="mosaic-item" data-index="0">
+                    <img src="Website Photos/000003730014.jpg" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="1">
+                    <img src="Website Photos/000031310009.jpg" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="2">
+                    <img src="Website Photos/000074600014 copy.jpg" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="3">
+                    <img src="Website Photos/7123558931961362880.JPG" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="4">
+                    <img src="Website Photos/CECFD6B7-2CE8-41F1-AF49-6C89349298D2.JPG" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="5">
+                    <img src="Website Photos/ff8376d4-71df-44e4-9d89-42634c4a093d.JPG" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="6">
+                    <img src="Website Photos/image000000.jpg" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="7">
+                    <img src="Website Photos/IMG_0184.PNG" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="8">
+                    <img src="Website Photos/IMG_20180811_191720_Original.jpg" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="9">
+                    <img src="Website Photos/IMG_2148.jpg" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="10">
+                    <img src="Website Photos/IMG_2509.jpg" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="11">
+                    <img src="Website Photos/IMG_6899.jpg" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="12">
+                    <img src="Website Photos/IMG_7948.jpg" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="13">
+                    <img src="Website Photos/PXL_20221029_042158085.MP_Original.JPG" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="14">
+                    <img src="Website Photos/PXL_20241108_235236115.MP_Original.JPG" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="15">
+                    <img src="Website Photos/PXL_20250812_165505415~2_Original.jpg" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="16">
+                    <img src="Website Photos/PXL_20250817_124448823.NIGHT_Original.jpg" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="17">
+                    <img src="Website Photos/PXL_20260102_191515099_Original.jpg" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="18">
+                    <img src="Website Photos/Screenshot 2026-02-01 at 7.01.07 PM.png" alt="Emily and Simo">
+                </div>
+                <div class="mosaic-item" data-index="19">
+                    <img src="Website Photos/Screenshot 2026-02-01 at 7.01.31 PM.png" alt="Emily and Simo">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p class="footer-names">Emily & Simo</p>
+        <p class="footer-details">July 24, 2026 · Stresa, Italy</p>
+    </footer>
+
+    <script>
+        function flipAnimate(container, action) {
+            const items = container.querySelectorAll('.mosaic-item');
+
+            // FIRST: Record current positions
+            const firstPositions = new Map();
+            items.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                firstPositions.set(item, { x: rect.left, y: rect.top, width: rect.width, height: rect.height });
+            });
+
+            // Perform the action (toggle class)
+            action();
+
+            // LAST: Get new positions
+            items.forEach(item => {
+                const first = firstPositions.get(item);
+                const last = item.getBoundingClientRect();
+
+                // INVERT: Calculate the difference
+                const deltaX = first.x - last.left;
+                const deltaY = first.y - last.top;
+                const scaleX = first.width / last.width;
+                const scaleY = first.height / last.height;
+
+                // Apply inverted position
+                item.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scaleX}, ${scaleY})`;
+                item.style.transformOrigin = 'top left';
+                item.style.transition = 'none';
+
+                // PLAY: Animate to final position
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        item.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
+                        item.style.transform = '';
+                    });
+                });
+            });
+
+            // Clean up after animation
+            setTimeout(() => {
+                items.forEach(item => {
+                    item.style.transition = '';
+                    item.style.transformOrigin = '';
+                });
+            }, 400);
+        }
+
+        const mosaic = document.querySelector('.photo-mosaic');
+
+        document.querySelectorAll('.mosaic-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                const shouldExpand = !this.classList.contains('expanded');
+                const clickedItem = this;
+
+                flipAnimate(mosaic, () => {
+                    if (shouldExpand) {
+                        clickedItem.classList.add('expanded');
+                    } else {
+                        clickedItem.classList.remove('expanded');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

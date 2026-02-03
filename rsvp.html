@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSVP | Emily & Simo</title>
+    <script src="auth.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <a href="index.html" class="logo">Emily & Simo</a>
+        <nav class="nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="our-story.html">Our Story</a></li>
+                <li><a href="travel.html">Travel</a></li>
+                <li><a href="things-to-do.html">Things To Do</a></li>
+                <li><a href="registry.html">Registry</a></li>
+                <li><a href="faqs.html">FAQs</a></li>
+                <li><a href="rsvp.html" class="nav-rsvp active">RSVP</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="page-content rsvp-content">
+            <h1>RSVP</h1>
+
+            <!-- Step 1: Search -->
+            <div id="rsvp-search" class="rsvp-step">
+                <p class="rsvp-intro">Please enter your name to find your invitation.</p>
+                <form id="search-form" class="rsvp-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required autocomplete="given-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required autocomplete="family-name">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn" id="search-btn">Find My Invitation</button>
+                </form>
+                <p id="search-error" class="error-message"></p>
+            </div>
+
+            <!-- Step 2: RSVP Response -->
+            <div id="rsvp-respond" class="rsvp-step" style="display: none;">
+                <p class="rsvp-intro">We found you! Please let us know if you'll be joining us.</p>
+
+                <form id="rsvp-form" class="rsvp-form">
+                    <!-- Guest Card -->
+                    <div class="rsvp-card">
+                        <h3 id="guest-name" class="rsvp-guest-name"></h3>
+                        <div class="rsvp-options">
+                            <label class="rsvp-option">
+                                <input type="radio" name="guestResponse" value="Y" required>
+                                <span class="rsvp-option-box accept">
+                                    <span class="option-label">Joyfully Accept</span>
+                                </span>
+                            </label>
+                            <label class="rsvp-option">
+                                <input type="radio" name="guestResponse" value="N" required>
+                                <span class="rsvp-option-box decline">
+                                    <span class="option-label">Regretfully Decline</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Plus One Card (hidden by default) -->
+                    <div id="plus-one-card" class="rsvp-card" style="display: none;">
+                        <h3 id="plus-one-name" class="rsvp-guest-name"></h3>
+                        <div class="rsvp-options">
+                            <label class="rsvp-option">
+                                <input type="radio" name="plusOneResponse" value="Y">
+                                <span class="rsvp-option-box accept">
+                                    <span class="option-label">Joyfully Accept</span>
+                                </span>
+                            </label>
+                            <label class="rsvp-option">
+                                <input type="radio" name="plusOneResponse" value="N">
+                                <span class="rsvp-option-box decline">
+                                    <span class="option-label">Regretfully Decline</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn" id="submit-btn">Submit RSVP</button>
+                </form>
+
+                <button id="back-btn" class="btn-link">← Search for a different name</button>
+            </div>
+
+            <!-- Step 3: Confirmation -->
+            <div id="rsvp-confirm" class="rsvp-step" style="display: none;">
+                <div class="confirmation-message">
+                    <h2>Thank You!</h2>
+                    <p id="confirm-message"></p>
+                    <p class="confirm-note">If you need to update your response, simply search for your name again.</p>
+                </div>
+                <button id="restart-btn" class="btn">Update Response</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p class="footer-names">Emily & Simo</p>
+        <p class="footer-details">July 24, 2026 · Stresa, Italy</p>
+    </footer>
+
+    <script>
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzwe4UztcKqvBtKcsVOCCfIqBgkzNkmBT--5lRtZgwiH-hlESFlV7Lp6cm1RyRd8mbBeg/exec';
+
+        let currentGuest = null;
+        let currentPlusOne = null;
+
+        // Elements
+        const searchStep = document.getElementById('rsvp-search');
+        const respondStep = document.getElementById('rsvp-respond');
+        const confirmStep = document.getElementById('rsvp-confirm');
+        const searchForm = document.getElementById('search-form');
+        const rsvpForm = document.getElementById('rsvp-form');
+        const searchError = document.getElementById('search-error');
+        const searchBtn = document.getElementById('search-btn');
+        const submitBtn = document.getElementById('submit-btn');
+
+        // Search form submit
+        searchForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            searchError.textContent = '';
+            searchBtn.textContent = 'Searching...';
+            searchBtn.disabled = true;
+
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+
+            try {
+                const url = `${API_URL}?action=search&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.success && data.found) {
+                    currentGuest = data.guest;
+                    currentPlusOne = data.plusOne;
+                    showRespondStep();
+                } else if (data.success && !data.found) {
+                    searchError.textContent = "We couldn't find that name. Please check the spelling and try again, or contact Emily & Simo directly.";
+                } else {
+                    searchError.textContent = data.error || 'Something went wrong. Please try again.';
+                }
+            } catch (error) {
+                searchError.textContent = 'Unable to connect. Please check your internet and try again.';
+                console.error(error);
+            }
+
+            searchBtn.textContent = 'Find My Invitation';
+            searchBtn.disabled = false;
+        });
+
+        // Show respond step
+        function showRespondStep() {
+            searchStep.style.display = 'none';
+            respondStep.style.display = 'block';
+            confirmStep.style.display = 'none';
+
+            // Set guest name
+            document.getElementById('guest-name').textContent = `${currentGuest.firstName} ${currentGuest.lastName}`;
+
+            // Pre-select if already responded
+            if (currentGuest.rsvp) {
+                const radio = document.querySelector(`input[name="guestResponse"][value="${currentGuest.rsvp}"]`);
+                if (radio) radio.checked = true;
+            }
+
+            // Show plus one if exists
+            const plusOneCard = document.getElementById('plus-one-card');
+            if (currentPlusOne) {
+                plusOneCard.style.display = 'block';
+                document.getElementById('plus-one-name').textContent = `${currentPlusOne.firstName} ${currentPlusOne.lastName}`;
+
+                // Make plus one required
+                document.querySelectorAll('input[name="plusOneResponse"]').forEach(r => r.required = true);
+
+                // Pre-select if already responded
+                if (currentPlusOne.rsvp) {
+                    const radio = document.querySelector(`input[name="plusOneResponse"][value="${currentPlusOne.rsvp}"]`);
+                    if (radio) radio.checked = true;
+                }
+            } else {
+                plusOneCard.style.display = 'none';
+                document.querySelectorAll('input[name="plusOneResponse"]').forEach(r => r.required = false);
+            }
+        }
+
+        // RSVP form submit
+        rsvpForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+
+            const guestResponse = document.querySelector('input[name="guestResponse"]:checked').value;
+            const plusOneResponseEl = document.querySelector('input[name="plusOneResponse"]:checked');
+            const plusOneResponse = plusOneResponseEl ? plusOneResponseEl.value : '';
+
+            try {
+                const params = new URLSearchParams({
+                    action: 'rsvp',
+                    firstName: currentGuest.firstName,
+                    lastName: currentGuest.lastName,
+                    response: guestResponse,
+                    plusOneResponse: plusOneResponse
+                });
+
+                const response = await fetch(`${API_URL}?${params.toString()}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    showConfirmation(guestResponse, plusOneResponse);
+                } else {
+                    alert(data.error || 'Something went wrong. Please try again.');
+                }
+            } catch (error) {
+                alert('Unable to submit. Please check your internet and try again.');
+                console.error(error);
+            }
+
+            submitBtn.textContent = 'Submit RSVP';
+            submitBtn.disabled = false;
+        });
+
+        // Show confirmation
+        function showConfirmation(guestResponse, plusOneResponse) {
+            searchStep.style.display = 'none';
+            respondStep.style.display = 'none';
+            confirmStep.style.display = 'block';
+
+            let message = '';
+            const guestName = `${currentGuest.firstName} ${currentGuest.lastName}`;
+
+            if (guestResponse === 'Y') {
+                if (currentPlusOne && plusOneResponse === 'Y') {
+                    message = `We're thrilled that ${guestName} and ${currentPlusOne.firstName} ${currentPlusOne.lastName} will be celebrating with us in Stresa!`;
+                } else if (currentPlusOne && plusOneResponse === 'N') {
+                    message = `We're thrilled that ${guestName} will be celebrating with us in Stresa! We'll miss ${currentPlusOne.firstName}.`;
+                } else {
+                    message = `We're thrilled that ${guestName} will be celebrating with us in Stresa!`;
+                }
+            } else {
+                message = `We're sorry you won't be able to make it, but we appreciate you letting us know. You'll be missed!`;
+            }
+
+            document.getElementById('confirm-message').textContent = message;
+        }
+
+        // Back button
+        document.getElementById('back-btn').addEventListener('click', () => {
+            searchStep.style.display = 'block';
+            respondStep.style.display = 'none';
+            confirmStep.style.display = 'none';
+            rsvpForm.reset();
+        });
+
+        // Restart button
+        document.getElementById('restart-btn').addEventListener('click', () => {
+            searchStep.style.display = 'block';
+            respondStep.style.display = 'none';
+            confirmStep.style.display = 'none';
+            searchForm.reset();
+            rsvpForm.reset();
+        });
+    </script>
+</body>
+</html>

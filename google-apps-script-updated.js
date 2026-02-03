@@ -60,10 +60,26 @@ function handleSearch(e) {
       const plusOneLast = (row[COL_PLUS_ONE_LAST] || '').toString().trim();
 
       if (plusOneFirst || plusOneLast) {
+        // Find the plus one's row to get their RSVP
+        let plusOneRsvp = null;
+        const plusOneFirstLower = plusOneFirst.toLowerCase();
+        const plusOneLastLower = plusOneLast.toLowerCase();
+
+        for (let j = 0; j < data.length; j++) {
+          const pRow = data[j];
+          const pRowFirstName = (pRow[COL_FIRST_NAME] || '').toString().trim().toLowerCase();
+          const pRowLastName = (pRow[COL_LAST_NAME] || '').toString().trim().toLowerCase();
+
+          if (pRowFirstName === plusOneFirstLower && pRowLastName === plusOneLastLower) {
+            plusOneRsvp = pRow[COL_RSVP] || null;
+            break;
+          }
+        }
+
         plusOne = {
           firstName: plusOneFirst,
           lastName: plusOneLast,
-          rsvp: row[COL_RSVP] || null
+          rsvp: plusOneRsvp
         };
       }
 

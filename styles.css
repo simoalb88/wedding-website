@@ -43,6 +43,46 @@
     --dark-blue-light: #2C4A6E;
 }
 
+/* Clink Effect */
+.clink-effect {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    animation: clinkPop 0.6s ease-out forwards;
+}
+
+.clink-glass {
+    font-size: 28px;
+    position: absolute;
+    animation: clinkRotate 0.4s ease-out forwards;
+}
+
+.clink-sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #BF953F;
+    border-radius: 50%;
+    animation: sparkle 0.6s ease-out forwards;
+}
+
+@keyframes clinkPop {
+    0% { transform: scale(0.5); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes clinkRotate {
+    0% { transform: rotate(-20deg); }
+    30% { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
+}
+
+@keyframes sparkle {
+    0% { transform: scale(0) translate(0, 0); opacity: 1; }
+    100% { transform: scale(1) translate(var(--tx), var(--ty)); opacity: 0; }
+}
+
 /* Reset & Base */
 * {
     margin: 0;

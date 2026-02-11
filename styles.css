@@ -531,6 +531,20 @@ main {
     font-weight: 600;
 }
 
+.section-card .underline {
+    text-decoration: underline;
+}
+
+.section-card ul {
+    margin: 0.5rem 0 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.section-card li {
+    margin-bottom: 0.25rem;
+}
+
 .section-card .details {
     margin-top: 1.25rem;
     padding-top: 1.25rem;

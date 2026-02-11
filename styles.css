@@ -545,6 +545,17 @@ main {
     margin-bottom: 0.25rem;
 }
 
+.section-card a {
+    color: var(--dark-blue);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(30, 58, 95, 0.3);
+    transition: border-color 0.2s ease;
+}
+
+.section-card a:hover {
+    border-bottom-color: var(--dark-blue);
+}
+
 .section-card .details {
     margin-top: 1.25rem;
     padding-top: 1.25rem;

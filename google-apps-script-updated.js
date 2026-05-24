@@ -11,13 +11,15 @@ const WEDDING_DATE = 'July 24, 2026';
 const WEDDING_LOCATION = 'La Rampolina, Stresa, Italy';
 
 // Column indices (0-based) - adjust if your sheet is different
-const COL_FIRST_NAME = 0;      // Column A
-const COL_LAST_NAME = 1;       // Column B
-const COL_RSVP = 10;           // Column K
-const COL_PLUS_ONE_FIRST = 11; // Column L
-const COL_PLUS_ONE_LAST = 12;  // Column M
-const DATA_START_ROW = 7;      // Row where guest data starts
-const DATA_END_ROW = 129;      // Last row of guest data
+const COL_FIRST_NAME = 0;           // Column A
+const COL_LAST_NAME = 1;            // Column B
+const COL_RSVP = 10;                // Column K
+const COL_PLUS_ONE_FIRST = 11;      // Column L
+const COL_PLUS_ONE_LAST = 12;       // Column M
+const COL_APERITIVO_INVITED = 14;   // Column O (TRUE/FALSE)
+const COL_APERITIVO_RSVP = 15;      // Column P
+const DATA_START_ROW = 7;           // Row where guest data starts
+const DATA_END_ROW = 129;           // Last row of guest data
 
 function doGet(e) {
   const action = e.parameter.action;
@@ -27,6 +29,10 @@ function doGet(e) {
       return handleSearch(e);
     } else if (action === 'rsvp') {
       return handleRSVP(e);
+    } else if (action === 'searchAperitivo') {
+      return handleSearchAperitivo(e);
+    } else if (action === 'rsvpAperitivo') {
+      return handleRSVPAperitivo(e);
     } else {
       return jsonResponse({ success: false, error: 'Invalid action' });
     }
@@ -241,6 +247,133 @@ ${COUPLE_NAMES}
     });
   } catch (error) {
     console.error('Failed to send guest confirmation email:', error);
+  }
+}
+
+// ============================================
+// APERITIVO HANDLERS
+// ============================================
+
+function handleSearchAperitivo(e) {
+  const firstName = (e.parameter.firstName || '').trim().toLowerCase();
+  const lastName = (e.parameter.lastName || '').trim().toLowerCase();
+
+  const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
+  const data = sheet.getRange(DATA_START_ROW, 1, DATA_END_ROW - DATA_START_ROW + 1, 16).getValues();
+
+  for (let i = 0; i < data.length; i++) {
+    const row = data[i];
+    const rowFirstName = (row[COL_FIRST_NAME] || '').toString().trim().toLowerCase();
+    const rowLastName = (row[COL_LAST_NAME] || '').toString().trim().toLowerCase();
+
+    if (rowFirstName === firstName && rowLastName === lastName) {
+      const invited = (row[COL_APERITIVO_INVITED] || '').toString().trim().toLowerCase() === 'true';
+      const guest = {
+        firstName: row[COL_FIRST_NAME],
+        lastName: row[COL_LAST_NAME],
+        rsvp: row[COL_APERITIVO_RSVP] || null
+      };
+
+      // Check for plus-one and whether they're also invited to the aperitivo
+      let plusOne = null;
+      const plusOneFirst = (row[COL_PLUS_ONE_FIRST] || '').toString().trim();
+      const plusOneLast = (row[COL_PLUS_ONE_LAST] || '').toString().trim();
+
+      if (plusOneFirst) {
+        const plusOneFirstLower = plusOneFirst.toLowerCase();
+        const plusOneLastLower = plusOneLast.toLowerCase();
+        for (let j = 0; j < data.length; j++) {
+          const pRow = data[j];
+          if ((pRow[COL_FIRST_NAME] || '').toString().trim().toLowerCase() === plusOneFirstLower &&
+              (pRow[COL_LAST_NAME]  || '').toString().trim().toLowerCase() === plusOneLastLower) {
+            const plusOneInvited = (pRow[COL_APERITIVO_INVITED] || '').toString().trim().toLowerCase() === 'true';
+            if (plusOneInvited) {
+              plusOne = {
+                firstName: plusOneFirst,
+                lastName: plusOneLast,
+                rsvp: pRow[COL_APERITIVO_RSVP] || null
+              };
+            }
+            break;
+          }
+        }
+      }
+
+      return jsonResponse({ success: true, found: true, invited: invited, guest: guest, plusOne: plusOne });
+    }
+  }
+
+  return jsonResponse({ success: true, found: false });
+}
+
+function handleRSVPAperitivo(e) {
+  const firstName = (e.parameter.firstName || '').trim().toLowerCase();
+  const lastName = (e.parameter.lastName || '').trim().toLowerCase();
+  const response = e.parameter.response; // 'Y' or 'N'
+  const plusOneFirstName = (e.parameter.plusOneFirstName || '').trim().toLowerCase();
+  const plusOneLastName  = (e.parameter.plusOneLastName  || '').trim().toLowerCase();
+  const plusOneResponse  = e.parameter.plusOneResponse || '';
+
+  const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
+  const data = sheet.getRange(DATA_START_ROW, 1, DATA_END_ROW - DATA_START_ROW + 1, 16).getValues();
+
+  for (let i = 0; i < data.length; i++) {
+    const row = data[i];
+    const rowFirstName = (row[COL_FIRST_NAME] || '').toString().trim().toLowerCase();
+    const rowLastName  = (row[COL_LAST_NAME]  || '').toString().trim().toLowerCase();
+
+    if (rowFirstName === firstName && rowLastName === lastName) {
+      const rowNum = i + DATA_START_ROW;
+      sheet.getRange(rowNum, COL_APERITIVO_RSVP + 1).setValue(response);
+
+      const guestName = row[COL_FIRST_NAME] + ' ' + row[COL_LAST_NAME];
+      let plusOneName = null;
+
+      // Update plus-one's aperitivo RSVP if provided
+      if (plusOneResponse && plusOneFirstName) {
+        for (let j = 0; j < data.length; j++) {
+          const pRow = data[j];
+          if ((pRow[COL_FIRST_NAME] || '').toString().trim().toLowerCase() === plusOneFirstName &&
+              (pRow[COL_LAST_NAME]  || '').toString().trim().toLowerCase() === plusOneLastName) {
+            sheet.getRange(j + DATA_START_ROW, COL_APERITIVO_RSVP + 1).setValue(plusOneResponse);
+            plusOneName = pRow[COL_FIRST_NAME] + ' ' + pRow[COL_LAST_NAME];
+            break;
+          }
+        }
+      }
+
+      sendAperitivoNotificationEmail(guestName, plusOneName, response, plusOneResponse);
+      return jsonResponse({ success: true });
+    }
+  }
+
+  return jsonResponse({ success: false, error: 'Guest not found' });
+}
+
+function sendAperitivoNotificationEmail(guestName, plusOneName, response, plusOneResponse) {
+  const plusOneText = plusOneName
+    ? `${plusOneName}: ${plusOneResponse === 'Y' ? 'Accepted' : 'Declined'}`
+    : 'No plus one';
+
+  const subject = `Aperitivo RSVP: ${guestName} ${response === 'Y' ? 'is joining!' : 'can\'t make it'}`;
+  const body = `
+Aperitivo RSVP Received!
+
+Guest: ${guestName}
+Response: ${response === 'Y' ? 'Accepted' : 'Declined'}
+
+Plus One: ${plusOneText}
+
+Submitted: ${new Date().toLocaleString()}
+
+---
+View all responses in your Google Sheet.
+  `.trim();
+
+  try {
+    MailApp.sendEmail({ to: COUPLE_EMAIL, subject: subject, body: body });
+  } catch (error) {
+    console.error('Failed to send aperitivo notification email:', error);
   }
 }
 

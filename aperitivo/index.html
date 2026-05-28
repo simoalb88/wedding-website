@@ -18,16 +18,47 @@
             padding: 2rem 2rem 4rem;
         }
 
+        /* Hero image — revealed only once a guest is confirmed invited */
+        .fade-hero {
+            width: 100%;
+            aspect-ratio: 1915 / 710;
+            overflow: hidden;
+            margin-top: -90px;
+            display: none;
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 110px, black calc(100% - 158px), transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, black 110px, black calc(100% - 158px), transparent 100%);
+        }
+
+        .fade-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: bottom;
+        }
+
+        /* Invited view: show the hero and float the content up over it on a higher layer */
+        body.invited .fade-hero {
+            display: block;
+        }
+
+        body.invited .aperitivo-wrap {
+            padding-top: 0;
+            margin-top: -100px;
+            position: relative;
+            z-index: 3;
+        }
+
         .aperitivo-content {
             width: 100%;
             max-width: 560px;
         }
 
+        /* solid card, no fade — floats above the hero image with a soft shadow */
         .event-card {
             background: white;
             border-radius: 12px;
             padding: 2.5rem;
-            box-shadow: 0 2px 12px rgba(30, 58, 95, 0.06);
+            box-shadow: 0 10px 35px rgba(30, 58, 95, 0.18);
             margin-bottom: 1.5rem;
             text-align: center;
         }
@@ -112,6 +143,10 @@
     <header class="aperitivo-header">
         <span class="logo">Emily & Simo</span>
     </header>
+
+    <div class="fade-hero">
+        <img src="/aperitivo/Ape_03.png" alt="Aperitivo on the Lake">
+    </div>
 
     <main class="aperitivo-wrap">
         <div class="aperitivo-content">
@@ -240,6 +275,7 @@
         function showOnly(el) {
             [stepSearch, stepNotInvited, stepRsvp, stepConfirm].forEach(s => s.style.display = 'none');
             el.style.display = 'block';
+            document.body.classList.toggle('invited', el === stepRsvp);
         }
 
         // Search

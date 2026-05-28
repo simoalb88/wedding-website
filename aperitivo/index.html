@@ -122,18 +122,25 @@
         }
 
         .calendar-link {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
             margin-top: 1.5rem;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 0.04em;
             color: var(--dark-blue);
             text-decoration: none;
-            opacity: 0.45;
+            opacity: 0.35;
             transition: opacity 0.2s ease;
         }
 
+        .calendar-link svg {
+            width: 15px;
+            height: 15px;
+        }
+
         .calendar-link:hover {
-            opacity: 0.75;
+            opacity: 0.7;
         }
 
         .not-found-card {
@@ -211,8 +218,16 @@
                         <li><span class="event-detail-label">Where:</span> Pickup in Stresa</li>
                         <li><span class="event-detail-label">What:</span> Aperitivo cruise around Lake Maggiore & the Borromean Islands</li>
                     </ul>
-                    <a class="calendar-link" target="_blank" rel="noopener"
-                       href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Emily%20%26%20Simo%20-%20Pre-Wedding%20Aperitivo&amp;dates=20260723T180000/20260723T200000&amp;ctz=Europe/Rome&amp;details=Aperitivo%20cruise%20around%20Lake%20Maggiore%20%26%20the%20Borromean%20Islands.%20Pickup%20in%20Stresa.&amp;location=Stresa%2C%20Italy">Add to Google Calendar</a>
+                    <a class="calendar-link" target="_blank" rel="noopener" aria-label="Add to Google Calendar"
+                       href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Emily%20%26%20Simo%20-%20Pre-Wedding%20Aperitivo&amp;dates=20260723T180000/20260723T200000&amp;ctz=Europe/Rome&amp;details=Aperitivo%20cruise%20around%20Lake%20Maggiore%20%26%20the%20Borromean%20Islands.%20Pickup%20in%20Stresa.&amp;location=Stresa%2C%20Italy">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                            <line x1="3" y1="9" x2="21" y2="9"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                        </svg>
+                        <span>Add to calendar</span>
+                    </a>
                 </div>
 
                 <form id="rsvp-form" class="rsvp-form">

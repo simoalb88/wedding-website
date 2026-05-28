@@ -18,22 +18,28 @@
             padding: 2rem 2rem 4rem;
         }
 
-        /* Hero image — revealed only once a guest is confirmed invited */
+        /* Hero image — revealed only once a guest is confirmed invited.
+           Proportional system (consistent at every width / aspect ratio):
+           - aspect-ratio + object-position bottom → crop is always off the TOP, same %
+           - min-height keeps the hero a visible size on narrow/mobile screens
+           - fades are % of the hero height → consistent
+           - header tuck & card overlap are in vw → scale with the image */
         .fade-hero {
             width: 100%;
-            aspect-ratio: 1915 / 710;
+            aspect-ratio: 5 / 2;
+            min-height: 210px;
             overflow: hidden;
-            margin-top: -90px;
+            margin-top: -6.5vw;
             display: none;
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 110px, black calc(100% - 158px), transparent 100%);
-            mask-image: linear-gradient(to bottom, transparent 0, black 110px, black calc(100% - 158px), transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 18%, black 72%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, black 18%, black 72%, transparent 100%);
         }
 
         .fade-hero img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: bottom;
+            object-position: center bottom;
         }
 
         /* Invited view: show the hero and float the content up over it on a higher layer */
@@ -43,7 +49,7 @@
 
         body.invited .aperitivo-wrap {
             padding-top: 0;
-            margin-top: -100px;
+            margin-top: -8vw;
             position: relative;
             z-index: 3;
         }
@@ -129,20 +135,6 @@
             opacity: 0.6;
         }
 
-        /* Mobile: the hero image is short, so use a fixed height and smaller fades/overlap */
-        @media (max-width: 600px) {
-            .fade-hero {
-                aspect-ratio: auto;
-                height: 300px;
-                margin-top: -55px;
-                -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 65px, black calc(100% - 90px), transparent 100%);
-                mask-image: linear-gradient(to bottom, transparent 0, black 65px, black calc(100% - 90px), transparent 100%);
-            }
-
-            body.invited .aperitivo-wrap {
-                margin-top: -70px;
-            }
-        }
     </style>
 </head>
 <body>

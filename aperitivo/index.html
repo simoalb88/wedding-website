@@ -19,20 +19,20 @@
         }
 
         /* Hero image — revealed only once a guest is confirmed invited.
-           Proportional system (consistent at every width / aspect ratio):
            - aspect-ratio + object-position bottom → crop is always off the TOP, same %
            - min-height keeps the hero a visible size on narrow/mobile screens
-           - fades are % of the hero height → consistent
-           - header tuck & card overlap are in vw → scale with the image */
+           - TOP: tuck (-90px) and top fade (90px) are constant so the image's faded top
+             always tucks behind the logo and blends with it, regardless of width
+           - BOTTOM: fade (%) and card overlap (vw) scale with the image */
         .fade-hero {
             width: 100%;
             aspect-ratio: 5 / 2;
             min-height: 210px;
             overflow: hidden;
-            margin-top: -6.5vw;
+            margin-top: -90px;
             display: none;
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 18%, black 72%, transparent 100%);
-            mask-image: linear-gradient(to bottom, transparent 0, black 18%, black 72%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 90px, black 72%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, black 90px, black 72%, transparent 100%);
         }
 
         .fade-hero img {

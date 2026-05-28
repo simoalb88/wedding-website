@@ -121,6 +121,24 @@
             margin-bottom: 1.75rem;
         }
 
+        .calendar-link {
+            display: inline-block;
+            margin-top: 1.75rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--dark-blue);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(30, 58, 95, 0.3);
+            padding-bottom: 3px;
+            transition: border-color 0.2s ease, opacity 0.2s ease;
+        }
+
+        .calendar-link:hover {
+            border-bottom-color: var(--dark-blue);
+            opacity: 0.7;
+        }
+
         .not-found-card {
             background: white;
             border-radius: 12px;
@@ -196,6 +214,8 @@
                         <li><span class="event-detail-label">Where:</span> Pickup in Stresa</li>
                         <li><span class="event-detail-label">What:</span> Aperitivo cruise around Lake Maggiore & the Borromean Islands</li>
                     </ul>
+                    <a class="calendar-link" target="_blank" rel="noopener"
+                       href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Emily%20%26%20Simo%20-%20Pre-Wedding%20Aperitivo&amp;dates=20260723T180000/20260723T200000&amp;ctz=Europe/Rome&amp;details=Aperitivo%20cruise%20around%20Lake%20Maggiore%20%26%20the%20Borromean%20Islands.%20Pickup%20in%20Stresa.&amp;location=Stresa%2C%20Italy">Add to Google Calendar</a>
                 </div>
 
                 <form id="rsvp-form" class="rsvp-form">

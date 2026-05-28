@@ -11,6 +11,11 @@
             padding: 2rem 2rem 0;
         }
 
+        /* Logo scales with the hero composition (capped at 6rem beyond the max design width) */
+        .aperitivo-header .logo {
+            font-size: min(7.5vw, 6rem);
+        }
+
         .aperitivo-wrap {
             display: flex;
             flex-direction: column;
@@ -19,20 +24,21 @@
         }
 
         /* Hero image — revealed only once a guest is confirmed invited.
-           - aspect-ratio + object-position bottom → crop is always off the TOP, same %
-           - min-height keeps the hero a visible size on narrow/mobile screens
-           - TOP: tuck (-90px) and top fade (90px) are constant so the image's faded top
-             always tucks behind the logo and blends with it, regardless of width
-           - BOTTOM: fade (%) and card overlap (vw) scale with the image */
+           The whole composition is designed at a 1280px max width and scales as ONE unit:
+           - max-width 1280px → locks/static beyond the perfect size, centered
+           - aspect-ratio 5/2 + object-position bottom → consistent top-crop % at any width
+           - tuck, top fade, and the logo are all vw (≈7–7.5vw) so they scale together and
+             stay aligned; min()/max() caps them at the 1280px values beyond that width
+           - bottom fade is % of hero height; card overlap is capped vw */
         .fade-hero {
             width: 100%;
+            max-width: 1280px;
             aspect-ratio: 5 / 2;
-            min-height: 210px;
             overflow: hidden;
-            margin-top: -90px;
+            margin: max(-90px, -7vw) auto 0;
             display: none;
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 90px, black 72%, transparent 100%);
-            mask-image: linear-gradient(to bottom, transparent 0, black 90px, black 72%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0, black min(7vw, 90px), black 72%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, black min(7vw, 90px), black 72%, transparent 100%);
         }
 
         .fade-hero img {
@@ -49,7 +55,7 @@
 
         body.invited .aperitivo-wrap {
             padding-top: 0;
-            margin-top: -8vw;
+            margin-top: max(-100px, -7.8vw);
             position: relative;
             z-index: 3;
         }

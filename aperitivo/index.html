@@ -62,7 +62,12 @@
 
         .aperitivo-content {
             width: 100%;
-            max-width: 560px;
+            max-width: 620px;
+        }
+
+        /* let the RSVP/search forms fill the (now wider) content width so cards stay aligned */
+        .rsvp-form {
+            max-width: 100%;
         }
 
         /* solid card, no fade — floats above the hero image with a soft shadow */
@@ -95,7 +100,7 @@
         .event-details-list {
             list-style: none;
             padding: 0;
-            margin: 0 0 1.5rem;
+            margin: 0;
             font-size: 0.95rem;
             line-height: 2;
         }
@@ -125,7 +130,8 @@
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
-            margin-top: 1.5rem;
+            margin-top: 1.25rem;
+            margin-bottom: -0.5rem;
             font-size: 0.75rem;
             letter-spacing: 0.04em;
             color: var(--dark-blue);

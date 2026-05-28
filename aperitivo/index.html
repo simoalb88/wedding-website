@@ -11,9 +11,9 @@
             padding: 2rem 2rem 0;
         }
 
-        /* Logo scales with the hero composition (capped at 6rem beyond the max design width) */
+        /* Logo scales with the hero composition: floored on mobile, capped at 6rem on desktop */
         .aperitivo-header .logo {
-            font-size: min(7.5vw, 6rem);
+            font-size: clamp(3.25rem, 7.5vw, 6rem);
         }
 
         .aperitivo-wrap {
@@ -34,11 +34,12 @@
             width: 100%;
             max-width: 1280px;
             aspect-ratio: 5 / 2;
+            min-height: 200px;
             overflow: hidden;
-            margin: max(-90px, -7vw) auto 0;
+            margin: clamp(-90px, -7vw, -70px) auto 0;
             display: none;
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0, black min(7vw, 90px), black 72%, transparent 100%);
-            mask-image: linear-gradient(to bottom, transparent 0, black min(7vw, 90px), black 72%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0, black clamp(70px, 7vw, 90px), black 72%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, black clamp(70px, 7vw, 90px), black 72%, transparent 100%);
         }
 
         .fade-hero img {
@@ -55,7 +56,7 @@
 
         body.invited .aperitivo-wrap {
             padding-top: 0;
-            margin-top: max(-100px, -7.8vw);
+            margin-top: clamp(-100px, -7.8vw, -55px);
             position: relative;
             z-index: 3;
         }

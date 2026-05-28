@@ -67,20 +67,21 @@
         }
 
         .event-detail-label {
-            font-weight: 400;
-            margin-right: 0.5rem;
+            font-weight: 600;
+            margin-right: 0.25rem;
         }
 
         .event-description {
             font-size: 0.95rem;
             line-height: 1.8;
             opacity: 0.85;
+            margin-bottom: 1.75rem;
         }
 
         .event-icon {
             display: block;
-            margin: 0 auto 1.5rem;
-            width: 150px;
+            margin: 0 auto 1rem;
+            width: 220px;
             height: auto;
             filter: invert(19%) sepia(32%) saturate(900%) hue-rotate(183deg) brightness(90%) contrast(95%);
             opacity: 0.85;
@@ -118,7 +119,7 @@
             <!-- Step 1: Search -->
             <div id="step-search">
                 <p class="rsvp-intro" style="text-align:center; margin-bottom: 2rem; font-size: 1.05rem;">
-                    You're invited to join us the evening before the wedding. Enter your name to see the details and RSVP.
+                    You're invited to join us the <strong>evening before the wedding</strong>. Enter your name to see the details and RSVP.
                 </p>
                 <form id="search-form" class="rsvp-form">
                     <div class="form-row">
@@ -148,15 +149,15 @@
             <!-- Step 2b: Invited — event info + RSVP -->
             <div id="step-rsvp" style="display: none;" class="rsvp-step">
                 <div class="event-card">
+                    <img src="/aperitivo/logo-boat.png" alt="Boat" class="event-icon">
                     <p class="event-eyebrow">The Evening Before</p>
                     <h2 class="event-title">Aperitivo on the Lake</h2>
-                    <img src="/aperitivo/logo-boat.png" alt="Boat" class="event-icon">
+                    <p class="event-description">Join us for drinks and bites as we cruise around Lake Maggiore and the Borromean Islands. We'll set sail from Stresa as the sun goes down — a relaxed, festive way to kick off the wedding weekend together before the big day.</p>
                     <ul class="event-details-list">
-                        <li><span class="event-detail-label">When</span> Thursday, July 23 · 6:00–8:00 PM</li>
-                        <li><span class="event-detail-label">What</span> Aperitivo cruise around Lake Maggiore & the Borromean Islands</li>
-                        <li><span class="event-detail-label">Dress</span> Smart casual</li>
+                        <li><span class="event-detail-label">When:</span> Thursday, July 23 · 6:00–8:00 PM</li>
+                        <li><span class="event-detail-label">Where:</span> Pickup in Stresa</li>
+                        <li><span class="event-detail-label">What:</span> Aperitivo cruise around Lake Maggiore & the Borromean Islands</li>
                     </ul>
-                    <p class="event-description">Join us for drinks and bites as we sail around the islands the evening before the wedding. More details on the meeting point will follow closer to the date.</p>
                 </div>
 
                 <form id="rsvp-form" class="rsvp-form">

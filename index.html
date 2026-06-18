@@ -6,19 +6,20 @@
     <title>Emily & Simo | July 24, 2026</title>
     <script src="auth.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <script src="lang.js" defer></script>
 </head>
 <body>
     <header class="site-header">
         <span class="logo">Emily & Simo</span>
         <nav class="nav">
             <ul>
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="rsvp.html" class="nav-rsvp">RSVP</a></li>
-                <li><a href="our-story.html">Our Story</a></li>
-                <li><a href="travel.html">Travel</a></li>
-                <li><a href="things-to-do.html">Things To Do</a></li>
-                <li><a href="registry.html">Registry</a></li>
-                <li><a href="faqs.html">FAQs</a></li>
+                <li><a href="index.html" class="active" data-i18n="nav.home">Home</a></li>
+                <li><a href="rsvp.html" class="nav-rsvp" data-i18n="nav.rsvp">RSVP</a></li>
+                <li><a href="our-story.html" data-i18n="nav.story">Our Story</a></li>
+                <li><a href="travel.html" data-i18n="nav.travel">Travel</a></li>
+                <li><a href="things-to-do.html" data-i18n="nav.todo">Things To Do</a></li>
+                <li><a href="registry.html" data-i18n="nav.registry">Registry</a></li>
+                <li><a href="faqs.html" data-i18n="nav.faqs">FAQs</a></li>
             </ul>
         </nav>
     </header>
@@ -29,16 +30,21 @@
                 <img src="Rampo.png" alt="La Rampolina watercolor illustration" class="hero-image">
             </div>
             <div class="hero-info">
-                <p class="date-time">July 24, 2026 <span class="at">at</span> 17:00</p>
+                <p class="date-time" data-i18n="home.datetime">July 24, 2026 <span class="at">at</span> 17:00</p>
                 <p class="venue">La Rampolina</p>
-                <p class="location">Stresa, Italy</p>
+                <p class="location" data-i18n="home.location">Stresa, Italy</p>
             </div>
         </section>
     </main>
 
     <footer class="footer">
         <p class="footer-names">Emily & Simo</p>
-        <p class="footer-details">July 24, 2026 · Stresa, Italy</p>
+        <p class="footer-details" data-i18n="footer.details">July 24, 2026 · Stresa, Italy</p>
+        <div class="lang-toggle">
+            <button type="button" data-set-lang="en">EN</button>
+            <span class="lang-sep">/</span>
+            <button type="button" data-set-lang="it">IT</button>
+        </div>
     </footer>
     <script src="clink.js"></script>
 </body>

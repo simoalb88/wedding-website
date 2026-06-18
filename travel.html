@@ -6,19 +6,20 @@
     <title>Travel | Emily & Simo</title>
     <script src="auth.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <script src="lang.js" defer></script>
 </head>
 <body>
     <header class="site-header">
         <span class="logo">Emily & Simo</span>
         <nav class="nav">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="rsvp.html" class="nav-rsvp">RSVP</a></li>
-                <li><a href="our-story.html">Our Story</a></li>
-                <li><a href="travel.html" class="active">Travel</a></li>
-                <li><a href="things-to-do.html">Things To Do</a></li>
-                <li><a href="registry.html">Registry</a></li>
-                <li><a href="faqs.html">FAQs</a></li>
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="rsvp.html" class="nav-rsvp" data-i18n="nav.rsvp">RSVP</a></li>
+                <li><a href="our-story.html" data-i18n="nav.story">Our Story</a></li>
+                <li><a href="travel.html" class="active" data-i18n="nav.travel">Travel</a></li>
+                <li><a href="things-to-do.html" data-i18n="nav.todo">Things To Do</a></li>
+                <li><a href="registry.html" data-i18n="nav.registry">Registry</a></li>
+                <li><a href="faqs.html" data-i18n="nav.faqs">FAQs</a></li>
             </ul>
         </nav>
     </header>
@@ -28,12 +29,12 @@
             <h1>Travel</h1>
 
             <div class="section-card">
-                <div class="section-label">Accommodations</div>
-                <h2 class="section-title">Hotel</h2>
-                <p>We recommend staying in <span class="highlight">Stresa</span>, where we'll have a shuttle pick-up on the day.</p>
-                <p>Stresa is the lake's classic resort town: an elegant promenade, gardens, and a lineup of grand hotels that helped transform it from a quiet village into a destination for European travelers in the late 1800s and early 1900s. Just offshore are the Borromean Islands—Isola Bella, Isola Madre, and Isola dei Pescatori—famous for palaces, gardens, and postcard-perfect views, and tied to the Borromeo family for centuries.</p>
-                <p><span class="highlight">We strongly recommend booking sooner rather than later.</span> And if you're staying longer (or want something more specific), tell us and we'll happily share more options around the lake.</p>
-                <p class="underline">A few favorites (though Stresa has many excellent options):</p>
+                <div class="section-label" data-i18n="travel.label.accom">Accommodations</div>
+                <h2 class="section-title" data-i18n="travel.title.hotel">Hotel</h2>
+                <p data-i18n="travel.hotel.p1">We recommend staying in <span class="highlight">Stresa</span>, where we'll have a shuttle pick-up on the day.</p>
+                <p data-i18n="travel.hotel.p2">Stresa is the lake's classic resort town: an elegant promenade, gardens, and a lineup of grand hotels that helped transform it from a quiet village into a destination for European travelers in the late 1800s and early 1900s. Just offshore are the Borromean Islands—Isola Bella, Isola Madre, and Isola dei Pescatori—famous for palaces, gardens, and postcard-perfect views, and tied to the Borromeo family for centuries.</p>
+                <p data-i18n="travel.hotel.p3"><span class="highlight">We strongly recommend booking sooner rather than later.</span> And if you're staying longer (or want something more specific), tell us and we'll happily share more options around the lake.</p>
+                <p class="underline" data-i18n="travel.hotel.favorites">A few favorites (though Stresa has many excellent options):</p>
                 <ul>
                     <li><a href="https://www.borromees.it/" target="_blank">Grand Hotel des Îles Borromées</a></li>
                     <li><a href="https://www.reginapalace.it/" target="_blank">Regina Palace Hotel</a></li>
@@ -42,86 +43,91 @@
             </div>
 
             <div class="section-card">
-                <div class="section-label">Getting There</div>
+                <div class="section-label" data-i18n="travel.label.getting">Getting There</div>
                 <h2 class="section-title">Milano Malpensa</h2>
-                <p>The closest airport to Stresa is <span class="highlight">Milan Malpensa (MXP)</span>. From there, you have several options to reach the lake.</p>
+                <p data-i18n="travel.malpensa.p">The closest airport to Stresa is <span class="highlight">Milan Malpensa (MXP)</span>. From there, you have several options to reach the lake.</p>
             </div>
 
             <div class="section-card">
-                <div class="section-label">By Shuttle</div>
+                <div class="section-label" data-i18n="travel.label.shuttle">By Shuttle</div>
                 <h2 class="section-title">Alibus</h2>
-                <p>The easiest way from Malpensa to Stresa is the <span class="highlight"><a href="https://www.safduemila.com/linee/alibus-malpensa-lago-maggiore/" target="_blank">Alibus</a></span>, a direct shuttle that picks up at Terminal 1 (bus stop 6) and Terminal 2, and drops off directly in Stresa—no transfers needed.</p>
+                <p data-i18n="travel.shuttle.p">The easiest way from Malpensa to Stresa is the <span class="highlight"><a href="https://www.safduemila.com/linee/alibus-malpensa-lago-maggiore/" target="_blank">Alibus</a></span>, a direct shuttle that picks up at Terminal 1 (bus stop 6) and Terminal 2, and drops off directly in Stresa—no transfers needed.</p>
                 <div class="details">
                     <div class="detail-row">
-                        <span class="detail-label">Departures</span>
-                        <span>10:00, 12:00, 14:00, 16:00, 18:00, 20:00 from Malpensa</span>
+                        <span class="detail-label" data-i18n="travel.shuttle.departures.label">Departures</span>
+                        <span data-i18n="travel.shuttle.departures.val">10:00, 12:00, 14:00, 16:00, 18:00, 20:00 from Malpensa</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Travel time</span>
-                        <span>~1 hour 20 minutes to Stresa</span>
+                        <span class="detail-label" data-i18n="travel.shuttle.time.label">Travel time</span>
+                        <span data-i18n="travel.shuttle.time.val">~1 hour 20 minutes to Stresa</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Cost</span>
-                        <span>€14 to Stresa (pre-booked)</span>
+                        <span class="detail-label" data-i18n="travel.shuttle.cost.label">Cost</span>
+                        <span data-i18n="travel.shuttle.cost.val">€14 to Stresa (pre-booked)</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Full details</span>
-                        <span><a href="https://www.safduemila.com/linee/alibus-malpensa-lago-maggiore/" target="_blank">Timetable & stops →</a></span>
+                        <span class="detail-label" data-i18n="travel.shuttle.details.label">Full details</span>
+                        <span><a href="https://www.safduemila.com/linee/alibus-malpensa-lago-maggiore/" target="_blank" data-i18n="travel.shuttle.details.val">Timetable & stops →</a></span>
                     </div>
                 </div>
-                <p class="detail-note"><span class="highlight">Book in advance</span> at <a href="https://www.safbooking.com" target="_blank">safbooking.com</a> by 11:00 AM the day before travel (Friday 11:00 AM for weekend/holiday trips). Walk-ons are possible if seats remain, but carry a €5 surcharge.</p>
+                <p class="detail-note" data-i18n="travel.shuttle.note"><span class="highlight">Book in advance</span> at <a href="https://www.safbooking.com" target="_blank">safbooking.com</a> by 11:00 AM the day before travel (Friday 11:00 AM for weekend/holiday trips). Walk-ons are possible if seats remain, but carry a €5 surcharge.</p>
             </div>
 
             <div class="section-card">
-                <div class="section-label">By Train</div>
+                <div class="section-label" data-i18n="travel.label.train">By Train</div>
                 <h2 class="section-title">Regionale</h2>
-                <p>Stresa is well connected by rail on the <span class="highlight">Milano–Domodossola line</span>. From Milan Centrale, direct regional trains run to Stresa throughout the day—no reservation required.</p>
-                <p>If you're traveling from elsewhere in Italy or Europe, Milan Centrale is a major hub with connections from most major cities.</p>
+                <p data-i18n="travel.train.p1">Stresa is well connected by rail on the <span class="highlight">Milano–Domodossola line</span>. From Milan Centrale, direct regional trains run to Stresa throughout the day—no reservation required.</p>
+                <p data-i18n="travel.train.p2">If you're traveling from elsewhere in Italy or Europe, Milan Centrale is a major hub with connections from most major cities.</p>
                 <div class="details">
                     <div class="detail-row">
-                        <span class="detail-label">From Milan</span>
-                        <span>~1 hour 15 minutes</span>
+                        <span class="detail-label" data-i18n="travel.train.from.label">From Milan</span>
+                        <span data-i18n="travel.train.from.val">~1 hour 15 minutes</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Cost</span>
-                        <span>~€10–15</span>
+                        <span class="detail-label" data-i18n="travel.train.cost.label">Cost</span>
+                        <span data-i18n="travel.train.cost.val">~€10–15</span>
                     </div>
                 </div>
-                <p class="detail-note">Regional trains don't require seat reservations. Check schedules at <a href="https://www.trenitalia.com" target="_blank">trenitalia.com</a>.</p>
+                <p class="detail-note" data-i18n="travel.train.note">Regional trains don't require seat reservations. Check schedules at <a href="https://www.trenitalia.com" target="_blank">trenitalia.com</a>.</p>
             </div>
 
             <div class="section-card">
-                <div class="section-label">By Car</div>
-                <h2 class="section-title">Rental Car</h2>
-                <p>Renting a car is a great option if you plan to explore Lake Maggiore or nearby towns. Major companies like Hertz, Avis, Europcar, Sixt, and Budget are available at the airport.</p>
+                <div class="section-label" data-i18n="travel.label.car">By Car</div>
+                <h2 class="section-title" data-i18n="travel.title.car">Rental Car</h2>
+                <p data-i18n="travel.car.p">Renting a car is a great option if you plan to explore Lake Maggiore or nearby towns. Major companies like Hertz, Avis, Europcar, Sixt, and Budget are available at the airport.</p>
                 <div class="details">
                     <div class="detail-row">
-                        <span class="detail-label">Drive time</span>
-                        <span>~50–60 minutes</span>
+                        <span class="detail-label" data-i18n="travel.car.drive.label">Drive time</span>
+                        <span data-i18n="travel.car.drive.val">~50–60 minutes</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Tolls</span>
-                        <span>Yes, bring a credit card or cash</span>
+                        <span class="detail-label" data-i18n="travel.car.tolls.label">Tolls</span>
+                        <span data-i18n="travel.car.tolls.val">Yes, bring a credit card or cash</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Parking</span>
-                        <span>Most hotels offer parking—confirm with your hotel</span>
+                        <span class="detail-label" data-i18n="travel.car.parking.label">Parking</span>
+                        <span data-i18n="travel.car.parking.val">Most hotels offer parking—confirm with your hotel</span>
                     </div>
                 </div>
-                <p class="detail-note"><span class="highlight">Good to know:</span> You should obtain an international driver's license prior to arrival. You can get one at your local AAA for a small fee.</p>
+                <p class="detail-note" data-i18n="travel.car.note"><span class="highlight">Good to know:</span> You should obtain an international driver's license prior to arrival. You can get one at your local AAA for a small fee.</p>
             </div>
 
             <div class="section-card">
-                <div class="section-label">Good to Know</div>
-                <h2 class="section-title">Rideshare</h2>
-                <p>Please note that rideshare services like Uber are not readily available in Italy. Ferries are a wonderful and scenic way to get around Lake Maggiore!</p>
+                <div class="section-label" data-i18n="travel.label.good">Good to Know</div>
+                <h2 class="section-title" data-i18n="travel.title.rideshare">Rideshare</h2>
+                <p data-i18n="travel.rideshare.p">Please note that rideshare services like Uber are not readily available in Italy. Ferries are a wonderful and scenic way to get around Lake Maggiore!</p>
             </div>
         </section>
     </main>
 
     <footer class="footer">
         <p class="footer-names">Emily & Simo</p>
-        <p class="footer-details">July 24, 2026 · Stresa, Italy</p>
+        <p class="footer-details" data-i18n="footer.details">July 24, 2026 · Stresa, Italy</p>
+        <div class="lang-toggle">
+            <button type="button" data-set-lang="en">EN</button>
+            <span class="lang-sep">/</span>
+            <button type="button" data-set-lang="it">IT</button>
+        </div>
     </footer>
     <script src="clink.js"></script>
 </body>

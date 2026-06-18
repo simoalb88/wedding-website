@@ -6,19 +6,20 @@
     <title>Things To Do | Emily & Simo</title>
     <script src="auth.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <script src="lang.js" defer></script>
 </head>
 <body>
     <header class="site-header">
         <span class="logo">Emily & Simo</span>
         <nav class="nav">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="rsvp.html" class="nav-rsvp">RSVP</a></li>
-                <li><a href="our-story.html">Our Story</a></li>
-                <li><a href="travel.html">Travel</a></li>
-                <li><a href="things-to-do.html" class="active">Things To Do</a></li>
-                <li><a href="registry.html">Registry</a></li>
-                <li><a href="faqs.html">FAQs</a></li>
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="rsvp.html" class="nav-rsvp" data-i18n="nav.rsvp">RSVP</a></li>
+                <li><a href="our-story.html" data-i18n="nav.story">Our Story</a></li>
+                <li><a href="travel.html" data-i18n="nav.travel">Travel</a></li>
+                <li><a href="things-to-do.html" class="active" data-i18n="nav.todo">Things To Do</a></li>
+                <li><a href="registry.html" data-i18n="nav.registry">Registry</a></li>
+                <li><a href="faqs.html" data-i18n="nav.faqs">FAQs</a></li>
             </ul>
         </nav>
     </header>
@@ -27,48 +28,48 @@
         <section class="page-content" style="max-width: 1000px;">
             <h1>Things To Do</h1>
 
-            <p class="page-intro">Below are a few of our favorite places.</p>
+            <p class="page-intro" data-i18n="todo.intro">Below are a few of our favorite places.</p>
 
             <div class="card-grid">
                 <div class="section-card" data-image style="--bg-image: url('Website Photos/Things To Do Photos/Alberti.JPG')">
                     <h2 class="section-title">Libreria Alberti</h2>
                     <p class="place-address">14/15 Piazza San Vittore, Intra</p>
-                    <p>Need a gift to bring home? May we suggest the family bookstore? Founded by Simo's grandfather in 1954, here you will find a plethora of books and gifts for the whole family. There is also a second location located in Stresa.</p>
+                    <p data-i18n="todo.alberti.p">Need a gift to bring home? May we suggest the family bookstore? Founded by Simo's grandfather in 1954, here you will find a plethora of books and gifts for the whole family. There is also a second location located in Stresa.</p>
                 </div>
 
                 <div class="section-card" data-image style="--bg-image: url('Website Photos/Things To Do Photos/Isole Borromeo.jpg')">
-                    <h2 class="section-title">Borromeo Island Tour</h2>
-                    <p>Isola Bella is an absolute must, but we recommend checking out all the islands while in town. Tickets can be bought at the Stresa harbor or booked online in advance.</p>
+                    <h2 class="section-title" data-i18n="todo.borromeo.title">Borromeo Island Tour</h2>
+                    <p data-i18n="todo.borromeo.p">Isola Bella is an absolute must, but we recommend checking out all the islands while in town. Tickets can be bought at the Stresa harbor or booked online in advance.</p>
                 </div>
 
                 <div class="section-card" data-image style="--bg-image: url('Website Photos/Things To Do Photos/Ittico.jpg')">
                     <h2 class="section-title">Ittico Fish Bar</h2>
                     <p class="place-address">17 Viale Vittorio Tonolli, Pallanza</p>
-                    <p>Where we spend most of our evenings for aperitivo! Ittico has undeniable lake views and immaculate vibes.</p>
+                    <p data-i18n="todo.ittico.p">Where we spend most of our evenings for aperitivo! Ittico has undeniable lake views and immaculate vibes.</p>
                 </div>
 
                 <div class="section-card" data-image style="--bg-image: url('Website Photos/Things To Do Photos/Casera.jpg')">
                     <h2 class="section-title">La Casera</h2>
                     <p class="place-address">Piazza Daniele Ranzoni 19, Verbania</p>
-                    <p>While everything here is to die for, we recommend the 'i taglieri' because it's perfect for sampling a little of all the meats and cheeses.</p>
+                    <p data-i18n="todo.casera.p">While everything here is to die for, we recommend the 'i taglieri' because it's perfect for sampling a little of all the meats and cheeses.</p>
                 </div>
 
                 <div class="section-card" data-image style="--bg-image: url('Website Photos/Things To Do Photos/Dali.jpg')">
                     <h2 class="section-title">Dali – Ristorante Pizzeria Lounge Bar</h2>
                     <p class="place-address">32 Corso Goffredo Mameli, Intra</p>
-                    <p>This is our favorite place for a cappuccino and croissant. The views are everything here!</p>
+                    <p data-i18n="todo.dali.p">This is our favorite place for a cappuccino and croissant. The views are everything here!</p>
                 </div>
 
                 <div class="section-card" data-image style="--bg-image: url('Website Photos/Things To Do Photos/Gelateria.jpg')">
                     <h2 class="section-title">Gelato d'Altri Tempi</h2>
                     <p class="place-address">38 Via San Fabiano, Intra</p>
-                    <p>By Italian law, you must enjoy one gelato a day! This is our favorite spot, but honestly, you can't go wrong anywhere you wander.</p>
+                    <p data-i18n="todo.gelato.p">By Italian law, you must enjoy one gelato a day! This is our favorite spot, but honestly, you can't go wrong anywhere you wander.</p>
                 </div>
 
                 <div class="section-card" data-image style="--bg-image: url('Website Photos/Things To Do Photos/Skybar.jpg')">
                     <h2 class="section-title">Sky Bar at Hotel La Palma</h2>
                     <p class="place-address">33 Corso Umberto I, Stresa</p>
-                    <p>The views are breathtaking, especially at sunset! A reservation is recommended, but not required.</p>
+                    <p data-i18n="todo.skybar.p">The views are breathtaking, especially at sunset! A reservation is recommended, but not required.</p>
                 </div>
 
                 <a href="https://maps.app.goo.gl/UB126QCw8yiMn2ga7" target="_blank" class="section-card map-card">
@@ -85,8 +86,8 @@
                         <div class="map-card-overlay"></div>
                     </div>
                     <div class="map-card-content">
-                        <h2 class="section-title">More Places to Explore</h2>
-                        <p>View our full collection on Google Maps</p>
+                        <h2 class="section-title" data-i18n="todo.map.title">More Places to Explore</h2>
+                        <p data-i18n="todo.map.p">View our full collection on Google Maps</p>
                         <span class="explore-arrow-inline">→</span>
                     </div>
                 </a>
@@ -96,7 +97,12 @@
 
     <footer class="footer">
         <p class="footer-names">Emily & Simo</p>
-        <p class="footer-details">July 24, 2026 · Stresa, Italy</p>
+        <p class="footer-details" data-i18n="footer.details">July 24, 2026 · Stresa, Italy</p>
+        <div class="lang-toggle">
+            <button type="button" data-set-lang="en">EN</button>
+            <span class="lang-sep">/</span>
+            <button type="button" data-set-lang="it">IT</button>
+        </div>
     </footer>
     <script src="clink.js"></script>
 </body>

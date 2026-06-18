@@ -6,19 +6,20 @@
     <title>Registry | Emily & Simo</title>
     <script src="auth.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <script src="lang.js" defer></script>
 </head>
 <body>
     <header class="site-header">
         <span class="logo">Emily & Simo</span>
         <nav class="nav">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="rsvp.html" class="nav-rsvp">RSVP</a></li>
-                <li><a href="our-story.html">Our Story</a></li>
-                <li><a href="travel.html">Travel</a></li>
-                <li><a href="things-to-do.html">Things To Do</a></li>
-                <li><a href="registry.html" class="active">Registry</a></li>
-                <li><a href="faqs.html">FAQs</a></li>
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="rsvp.html" class="nav-rsvp" data-i18n="nav.rsvp">RSVP</a></li>
+                <li><a href="our-story.html" data-i18n="nav.story">Our Story</a></li>
+                <li><a href="travel.html" data-i18n="nav.travel">Travel</a></li>
+                <li><a href="things-to-do.html" data-i18n="nav.todo">Things To Do</a></li>
+                <li><a href="registry.html" class="active" data-i18n="nav.registry">Registry</a></li>
+                <li><a href="faqs.html" data-i18n="nav.faqs">FAQs</a></li>
             </ul>
         </nav>
     </header>
@@ -27,7 +28,7 @@
         <section class="page-content">
             <h1>Registry</h1>
 
-            <p class="registry-intro">Your presence at our wedding is the greatest gift of all. However, if you wish to honor us with a gift, we've registered on Zola.</p>
+            <p class="registry-intro" data-i18n="registry.intro">Your presence at our wedding is the greatest gift of all. However, if you wish to honor us with a gift, we've registered on Zola.</p>
         </section>
 
         <div class="registry-embed">
@@ -38,7 +39,12 @@
 
     <footer class="footer">
         <p class="footer-names">Emily & Simo</p>
-        <p class="footer-details">July 24, 2026 · Stresa, Italy</p>
+        <p class="footer-details" data-i18n="footer.details">July 24, 2026 · Stresa, Italy</p>
+        <div class="lang-toggle">
+            <button type="button" data-set-lang="en">EN</button>
+            <span class="lang-sep">/</span>
+            <button type="button" data-set-lang="it">IT</button>
+        </div>
     </footer>
     <script src="clink.js"></script>
 </body>

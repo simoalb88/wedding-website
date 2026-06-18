@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thursday Evening | Emily & Simo</title>
     <link rel="stylesheet" href="/styles.css">
+    <script src="/lang.js" defer></script>
     <style>
         .aperitivo-header {
             text-align: center;
@@ -186,21 +187,21 @@
 
             <!-- Step 1: Search -->
             <div id="step-search">
-                <p class="rsvp-intro" style="text-align:center; margin-bottom: 2rem; font-size: 1.05rem;">
+                <p class="rsvp-intro" style="text-align:center; margin-bottom: 2rem; font-size: 1.05rem;" data-i18n="ap.searchIntro">
                     You're invited to join us the <strong>evening before the wedding</strong>. Enter your name to see the details and RSVP.
                 </p>
                 <form id="search-form" class="rsvp-form">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="firstName">First Name</label>
+                            <label for="firstName" data-i18n="rsvp.firstName">First Name</label>
                             <input type="text" id="firstName" name="firstName" required autocomplete="given-name">
                         </div>
                         <div class="form-group">
-                            <label for="lastName">Last Name</label>
+                            <label for="lastName" data-i18n="rsvp.lastName">Last Name</label>
                             <input type="text" id="lastName" name="lastName" required autocomplete="family-name">
                         </div>
                     </div>
-                    <button type="submit" class="btn" id="search-btn">Find My Invitation</button>
+                    <button type="submit" class="btn" id="search-btn" data-i18n="rsvp.findBtn">Find My Invitation</button>
                 </form>
                 <p id="search-error" class="error-message"></p>
             </div>
@@ -208,22 +209,22 @@
             <!-- Step 2a: Not invited -->
             <div id="step-not-invited" style="display: none;" class="rsvp-step">
                 <div class="not-found-card">
-                    <p>We couldn't find your name on the list for this event.</p>
-                    <p>If you think this is a mistake, please reach out to Emily or Simo directly.</p>
+                    <p data-i18n="ap.notInvited1">We couldn't find your name on the list for this event.</p>
+                    <p data-i18n="ap.notInvited2">If you think this is a mistake, please reach out to Emily or Simo directly.</p>
                 </div>
-                <button id="try-again-btn" class="btn-link">← Try a different name</button>
+                <button id="try-again-btn" class="btn-link" data-i18n="ap.tryAgain">← Try a different name</button>
             </div>
 
             <!-- Step 2b: Invited — event info + RSVP -->
             <div id="step-rsvp" style="display: none;" class="rsvp-step">
                 <div class="event-card">
-                    <p class="event-eyebrow">The Evening Before</p>
-                    <h2 class="event-title">Aperitivo on the Lake</h2>
-                    <p class="event-description">Join us for drinks and bites as we cruise around Lake Maggiore and the Borromean Islands. We'll set sail from Stresa as the sun goes down — a relaxed, festive way to kick off the wedding weekend together before the big day.</p>
+                    <p class="event-eyebrow" data-i18n="ap.eyebrow">The Evening Before</p>
+                    <h2 class="event-title" data-i18n="ap.title">Aperitivo on the Lake</h2>
+                    <p class="event-description" data-i18n="ap.desc">Join us for drinks and bites as we cruise around Lake Maggiore and the Borromean Islands. We'll set sail from Stresa as the sun goes down — a relaxed, festive way to kick off the wedding weekend together before the big day.</p>
                     <ul class="event-details-list">
-                        <li><span class="event-detail-label">When:</span> Thursday, July 23 · 6:00–8:00 PM</li>
-                        <li><span class="event-detail-label">Where:</span> Pickup in Stresa</li>
-                        <li><span class="event-detail-label">What:</span> Aperitivo cruise around Lake Maggiore & the Borromean Islands</li>
+                        <li><span class="event-detail-label" data-i18n="ap.when.label">When:</span> <span data-i18n="ap.when.val">Thursday, July 23 · 6:00–8:00 PM</span></li>
+                        <li><span class="event-detail-label" data-i18n="ap.where.label">Where:</span> <span data-i18n="ap.where.val">Pickup in Stresa</span></li>
+                        <li><span class="event-detail-label" data-i18n="ap.what.label">What:</span> <span data-i18n="ap.what.val">Aperitivo cruise around Lake Maggiore & the Borromean Islands</span></li>
                     </ul>
                     <a class="calendar-link" target="_blank" rel="noopener" aria-label="Add to Google Calendar"
                        href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Emily%20%26%20Simo%20-%20Pre-Wedding%20Aperitivo&amp;dates=20260723T180000/20260723T200000&amp;ctz=Europe/Rome&amp;details=Aperitivo%20cruise%20around%20Lake%20Maggiore%20%26%20the%20Borromean%20Islands.%20Pickup%20in%20Stresa.&amp;location=Stresa%2C%20Italy">
@@ -233,7 +234,7 @@
                             <line x1="8" y1="2" x2="8" y2="6"></line>
                             <line x1="16" y1="2" x2="16" y2="6"></line>
                         </svg>
-                        <span>Add to calendar</span>
+                        <span data-i18n="ap.calendar">Add to calendar</span>
                     </a>
                 </div>
 
@@ -245,13 +246,13 @@
                             <label class="rsvp-option">
                                 <input type="radio" name="guestResponse" value="Y" required>
                                 <span class="rsvp-option-box accept">
-                                    <span class="option-label">Joyfully Accept</span>
+                                    <span class="option-label" data-i18n="rsvp.accept">Joyfully Accept</span>
                                 </span>
                             </label>
                             <label class="rsvp-option">
                                 <input type="radio" name="guestResponse" value="N" required>
                                 <span class="rsvp-option-box decline">
-                                    <span class="option-label">Regretfully Decline</span>
+                                    <span class="option-label" data-i18n="rsvp.decline">Regretfully Decline</span>
                                 </span>
                             </label>
                         </div>
@@ -264,32 +265,32 @@
                             <label class="rsvp-option">
                                 <input type="radio" name="plusOneResponse" value="Y">
                                 <span class="rsvp-option-box accept">
-                                    <span class="option-label">Joyfully Accept</span>
+                                    <span class="option-label" data-i18n="rsvp.accept">Joyfully Accept</span>
                                 </span>
                             </label>
                             <label class="rsvp-option">
                                 <input type="radio" name="plusOneResponse" value="N">
                                 <span class="rsvp-option-box decline">
-                                    <span class="option-label">Regretfully Decline</span>
+                                    <span class="option-label" data-i18n="rsvp.decline">Regretfully Decline</span>
                                 </span>
                             </label>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn" id="submit-btn" style="margin-top: 1rem;">Submit RSVP</button>
+                    <button type="submit" class="btn" id="submit-btn" style="margin-top: 1rem;" data-i18n="rsvp.submit">Submit RSVP</button>
                 </form>
 
-                <button id="back-btn" class="btn-link">← Search for a different name</button>
+                <button id="back-btn" class="btn-link" data-i18n="rsvp.back">← Search for a different name</button>
             </div>
 
             <!-- Step 3: Confirmation -->
             <div id="step-confirm" style="display: none;" class="rsvp-step">
                 <div class="confirmation-message">
-                    <h2>Thank You!</h2>
+                    <h2 data-i18n="rsvp.thankyou">Thank You!</h2>
                     <p id="confirm-message"></p>
-                    <p class="confirm-note">If you need to update your response, simply search for your name again.</p>
+                    <p class="confirm-note" data-i18n="rsvp.confirmNote2">If you need to update your response, simply search for your name again.</p>
                 </div>
-                <button id="restart-btn" class="btn" style="max-width: 560px; margin: 0 auto; display: block;">Update Response</button>
+                <button id="restart-btn" class="btn" style="max-width: 560px; margin: 0 auto; display: block;" data-i18n="rsvp.updateBtn">Update Response</button>
             </div>
 
         </div>
@@ -297,7 +298,12 @@
 
     <footer class="footer">
         <p class="footer-names">Emily & Simo</p>
-        <p class="footer-details">July 24, 2026 · Stresa, Italy</p>
+        <p class="footer-details" data-i18n="footer.details">July 24, 2026 · Stresa, Italy</p>
+        <div class="lang-toggle">
+            <button type="button" data-set-lang="en">EN</button>
+            <span class="lang-sep">/</span>
+            <button type="button" data-set-lang="it">IT</button>
+        </div>
     </footer>
 
     <script>
@@ -324,7 +330,7 @@
         document.getElementById('search-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             searchError.textContent = '';
-            searchBtn.textContent = 'Searching...';
+            searchBtn.textContent = WeddingLang.t('rsvp.searching');
             searchBtn.disabled = true;
 
             const firstName = document.getElementById('firstName').value.trim();
@@ -367,21 +373,21 @@
                 } else if (data.success && !data.found) {
                     showOnly(stepNotInvited);
                 } else {
-                    searchError.textContent = data.error || 'Something went wrong. Please try again.';
+                    searchError.textContent = data.error || WeddingLang.t('rsvp.genericError');
                 }
             } catch (err) {
-                searchError.textContent = 'Unable to connect. Please check your internet and try again.';
+                searchError.textContent = WeddingLang.t('rsvp.connectError');
                 console.error(err);
             }
 
-            searchBtn.textContent = 'Find My Invitation';
+            searchBtn.textContent = WeddingLang.t('rsvp.findBtn');
             searchBtn.disabled = false;
         });
 
         // RSVP submit
         document.getElementById('rsvp-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            submitBtn.textContent = 'Submitting...';
+            submitBtn.textContent = WeddingLang.t('rsvp.submitting');
             submitBtn.disabled = true;
 
             const guestResponse   = document.querySelector('input[name="guestResponse"]:checked').value;
@@ -407,25 +413,28 @@
 
                 if (data.success) {
                     const name = `${currentGuest.firstName} ${currentGuest.lastName}`;
-                    let msg = guestResponse === 'Y'
-                        ? `We're so excited that ${name} will be joining us on the lake!`
-                        : `We're sorry you won't be able to make it, but we appreciate you letting us know. See you at the wedding!`;
-
-                    if (currentPlusOne && plusOneResponse === 'Y' && guestResponse === 'Y') {
-                        msg = `We're so excited that ${name} and ${currentPlusOne.firstName} will be joining us on the lake!`;
+                    let msg;
+                    if (guestResponse === 'Y') {
+                        if (currentPlusOne && plusOneResponse === 'Y') {
+                            msg = WeddingLang.tf('ap.msg.bothAccept', { name: name, plusonefirst: currentPlusOne.firstName });
+                        } else {
+                            msg = WeddingLang.tf('ap.msg.guestAccept', { name: name });
+                        }
+                    } else {
+                        msg = WeddingLang.t('ap.msg.decline');
                     }
 
                     document.getElementById('confirm-message').textContent = msg;
                     showOnly(stepConfirm);
                 } else {
-                    alert(data.error || 'Something went wrong. Please try again.');
+                    alert(data.error || WeddingLang.t('rsvp.genericError'));
                 }
             } catch (err) {
-                alert('Unable to submit. Please check your internet and try again.');
+                alert(WeddingLang.t('rsvp.submitError'));
                 console.error(err);
             }
 
-            submitBtn.textContent = 'Submit RSVP';
+            submitBtn.textContent = WeddingLang.t('rsvp.submit');
             submitBtn.disabled = false;
         });
 

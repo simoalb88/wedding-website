@@ -171,13 +171,21 @@
             opacity: 0.6;
         }
 
-        /* Center the footer language toggle on this page so it sits centered at the
-           bottom, matching the main password / login screen */
-        .footer .lang-toggle {
-            position: static;
-            transform: none;
-            margin-top: 1.25rem;
+        /* Login/search screens mirror the main password page: hide the footer banner
+           and place the EN/IT toggle centered at the bottom on the beige background */
+        body:not(.invited) .footer { display: none; }
+
+        .login-lang-toggle {
+            position: fixed;
+            left: 50%;
+            bottom: 2rem;
+            transform: translateX(-50%);
+            color: var(--dark-blue);
         }
+
+        /* Once invited (long, scrolling content), the footer returns and the
+           fixed login toggle is hidden */
+        body.invited .login-lang-toggle { display: none; }
 
     </style>
 </head>
@@ -313,6 +321,12 @@
             <button type="button" data-set-lang="it">IT</button>
         </div>
     </footer>
+
+    <div class="lang-toggle login-lang-toggle">
+        <button type="button" data-set-lang="en">EN</button>
+        <span class="lang-sep">/</span>
+        <button type="button" data-set-lang="it">IT</button>
+    </div>
 
     <script>
         const API_URL = 'https://script.google.com/macros/s/AKfycbzwe4UztcKqvBtKcsVOCCfIqBgkzNkmBT--5lRtZgwiH-hlESFlV7Lp6cm1RyRd8mbBeg/exec';

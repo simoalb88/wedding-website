@@ -236,13 +236,13 @@
         // Event definitions in chronological order
         const EVENTS = [
             {
-                key: 'lunch', image: null,
+                key: 'lunch', image: 'Casera01.png', pos: 'center 81%',
                 titleKey: 'lunch.title', whenKey: 'lunch.when', whereKey: 'lunch.where', descKey: 'lunch.desc',
                 visible: (ev) => ev && ev.invited,
                 cal: { text: 'Emily & Simo - Welcome Lunch', dates: '20260723T123000/20260723T143000', location: 'La Casera, Intra, Italy' }
             },
             {
-                key: 'aperitivo', image: '/aperitivo/Ape_03.png',
+                key: 'aperitivo', image: '/aperitivo/Ape_03.png', pos: 'center 77%',
                 titleKey: 'ap.title', whenKey: 'ap.when.val', whereKey: 'ap.where.val', descKey: 'ap.desc',
                 visible: (ev) => ev && ev.invited,
                 cal: { text: 'Emily & Simo - Pre-Wedding Aperitivo', dates: '20260723T180000/20260723T200000', location: 'Stresa, Italy' }
@@ -324,7 +324,7 @@
 
                 return `
                 <div class="sched-card" data-event="${def.key}">
-                    ${def.image ? `<div class="sched-banner"><img src="${def.image}" alt=""></div>` : ''}
+                    ${def.image ? `<div class="sched-banner"><img src="${def.image}" alt=""${def.pos ? ` style="object-position:${def.pos}"` : ''}></div>` : ''}
                     <div class="sched-card-body">
                         <h2 class="section-title">${t(def.titleKey)}</h2>
                         <button type="button" class="sched-status sched-status--${chip.cls}" data-toggle="${def.key}" title="${ev.rsvp ? t('schedule.rsvpUpdate') : t('schedule.rsvpToggle')}">${chip.label}</button>

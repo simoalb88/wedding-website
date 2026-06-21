@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events | Emily & Simo</title>
+    <script src="auth.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="lang.js" defer></script>
+    <style>
+        .sched-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .sched-greeting {
+            font-family: 'Radiograph', Georgia, serif;
+            font-size: 2rem;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+
+        .sched-subtitle {
+            font-size: 1.05rem;
+            opacity: 0.75;
+        }
+
+        .sched-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .sched-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(30, 58, 95, 0.06);
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .sched-banner {
+            position: relative;
+            height: 230px;
+            background: var(--beige);
+            overflow: hidden;
+        }
+
+        .sched-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 72%;
+            transform: scale(1.16);
+            display: block;
+        }
+
+        /* soften the image into the card body */
+        .sched-banner::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: 55px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), #fff);
+        }
+
+        .sched-card-body {
+            padding: 1.75rem 2.5rem 2rem;
+        }
+
+        .sched-card .section-title {
+            margin-bottom: 1rem;
+        }
+
+        .sched-status {
+            display: inline-block;
+            font-family: 'MrsEaves', 'Times New Roman', serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.4rem 1.1rem;
+            border: none;
+            border-radius: 999px;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .sched-status:hover {
+            box-shadow: 0 2px 8px rgba(30, 58, 95, 0.15);
+        }
+
+        .sched-status--going { background: #e8f5e9; color: #2e7d32; }
+        .sched-status--notGoing { background: #ffebee; color: #c62828; }
+        .sched-status--respond { background: var(--beige-alt); color: var(--dark-blue); }
+
+        .sched-details {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.25rem;
+            font-size: 0.95rem;
+            line-height: 2;
+        }
+
+        .sched-details li {
+            border-top: 1px solid rgba(30, 58, 95, 0.08);
+            padding: 0.5rem 0;
+        }
+
+        .sched-details li:last-child {
+            border-bottom: 1px solid rgba(30, 58, 95, 0.08);
+        }
+
+        .sched-detail-label {
+            font-weight: 600;
+            margin-right: 0.25rem;
+        }
+
+        .sched-desc {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            opacity: 0.85;
+            margin-bottom: 1.5rem;
+        }
+
+        .sched-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .sched-calendar {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.04em;
+            color: var(--dark-blue);
+            text-decoration: none;
+            opacity: 0.4;
+            transition: opacity 0.2s ease;
+        }
+
+        .sched-calendar svg { width: 15px; height: 15px; }
+        .sched-calendar:hover { opacity: 0.7; }
+
+        .sched-rsvp-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--dark-blue);
+            opacity: 0.6;
+            transition: opacity 0.2s ease;
+            padding: 0;
+        }
+        .sched-rsvp-toggle:hover { opacity: 1; }
+
+        .sched-rsvp {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(30, 58, 95, 0.1);
+            text-align: left;
+        }
+
+        .sched-rsvp.hidden { display: none; }
+
+        .sched-rsvp-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .sched-rsvp-group { margin-bottom: 1.25rem; }
+
+        .sched-save { margin-top: 0.5rem; }
+
+        .sched-save-note {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #2e7d32;
+            margin-top: 0.75rem;
+            min-height: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <span class="logo">Emily & Simo</span>
+        <nav class="nav">
+            <ul>
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="schedule.html" class="nav-rsvp active" data-i18n="nav.events">Events</a></li>
+                <li><a href="our-story.html" data-i18n="nav.story">Our Story</a></li>
+                <li><a href="travel.html" data-i18n="nav.travel">Travel</a></li>
+                <li><a href="things-to-do.html" data-i18n="nav.todo">Things To Do</a></li>
+                <li><a href="registry.html" data-i18n="nav.registry">Registry</a></li>
+                <li><a href="faqs.html" data-i18n="nav.faqs">FAQs</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="page-content" style="max-width: 800px;">
+            <div class="sched-intro">
+                <div class="sched-greeting" id="sched-greeting"></div>
+                <p class="sched-subtitle" id="sched-subtitle"></p>
+            </div>
+            <div class="sched-list" id="sched-list"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p class="footer-names">Emily & Simo</p>
+        <p class="footer-details" data-i18n="footer.details">July 24, 2026 · Stresa, Italy</p>
+        <div class="lang-toggle">
+            <button type="button" data-set-lang="en">EN</button>
+            <span class="lang-sep">/</span>
+            <button type="button" data-set-lang="it">IT</button>
+        </div>
+    </footer>
+
+    <script>
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzwe4UztcKqvBtKcsVOCCfIqBgkzNkmBT--5lRtZgwiH-hlESFlV7Lp6cm1RyRd8mbBeg/exec';
+        const GUEST_KEY = 'wedding_guest';
+
+        let profile = null;
+        try { profile = JSON.parse(sessionStorage.getItem(GUEST_KEY) || 'null'); } catch (e) {}
+
+        const t = (k) => (window.WeddingLang ? window.WeddingLang.t(k) : k);
+
+        // Event definitions in chronological order
+        const EVENTS = [
+            {
+                key: 'lunch', image: null,
+                titleKey: 'lunch.title', whenKey: 'lunch.when', whereKey: 'lunch.where', descKey: 'lunch.desc',
+                visible: (ev) => ev && ev.invited,
+                cal: { text: 'Emily & Simo - Welcome Lunch', dates: '20260723T123000/20260723T143000', location: 'La Casera, Intra, Italy' }
+            },
+            {
+                key: 'aperitivo', image: '/aperitivo/Ape_03.png',
+                titleKey: 'ap.title', whenKey: 'ap.when.val', whereKey: 'ap.where.val', descKey: 'ap.desc',
+                visible: (ev) => ev && ev.invited,
+                cal: { text: 'Emily & Simo - Pre-Wedding Aperitivo', dates: '20260723T180000/20260723T200000', location: 'Stresa, Italy' }
+            },
+            {
+                key: 'wedding', image: 'Rampo.png',
+                titleKey: 'wedding.title', whenKey: 'wedding.when', whereKey: 'wedding.where', descKey: 'wedding.desc',
+                visible: (ev) => ev && ev.attending,
+                cal: { text: 'Emily & Simo - Wedding', dates: '20260724T170000/20260724T230000', location: 'La Rampolina, Stresa, Italy' }
+            }
+        ];
+
+        function calHref(cal) {
+            return 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+                + '&text=' + encodeURIComponent(cal.text)
+                + '&dates=' + cal.dates
+                + '&ctz=Europe/Rome'
+                + '&location=' + encodeURIComponent(cal.location);
+        }
+
+        const CAL_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="16" y1="2" x2="16" y2="6"></line></svg>';
+
+        function statusChip(rsvp) {
+            if (rsvp === 'Y') return { cls: 'going', label: t('schedule.status.going') };
+            if (rsvp === 'N') return { cls: 'notGoing', label: t('schedule.status.notGoing') };
+            return { cls: 'respond', label: t('schedule.status.respond') };
+        }
+
+        // Does the plus-one belong to this event?
+        function plusOneInEvent(key) {
+            if (!profile.plusOne || !profile.plusOne.events) return false;
+            const pe = profile.plusOne.events[key];
+            if (!pe) return false;
+            return key === 'wedding' ? !!pe.attending : !!pe.invited;
+        }
+
+        function optionRow(name, value, current) {
+            return `
+                <div class="rsvp-options">
+                    <label class="rsvp-option">
+                        <input type="radio" name="${name}" value="Y" ${current === 'Y' ? 'checked' : ''}>
+                        <span class="rsvp-option-box accept"><span class="option-label">${t('rsvp.accept')}</span></span>
+                    </label>
+                    <label class="rsvp-option">
+                        <input type="radio" name="${name}" value="N" ${current === 'N' ? 'checked' : ''}>
+                        <span class="rsvp-option-box decline"><span class="option-label">${t('rsvp.decline')}</span></span>
+                    </label>
+                </div>`;
+        }
+
+        function render() {
+            const list = document.getElementById('sched-list');
+            const greeting = document.getElementById('sched-greeting');
+            const subtitle = document.getElementById('sched-subtitle');
+
+            if (!profile) { return; }
+
+            greeting.textContent = (window.WeddingLang ? window.WeddingLang.tf('greeting.hello', { name: profile.firstName }) : profile.firstName);
+
+            const events = profile.events || {};
+            const shown = EVENTS.filter(def => def.visible(events[def.key]));
+
+            if (shown.length === 0) {
+                subtitle.textContent = '';
+                list.innerHTML = `
+                    <div class="sched-card"><div class="sched-card-body">
+                        <h2 class="section-title">${t('schedule.none.title')}</h2>
+                        <p class="sched-desc" style="margin-bottom:0;">${t('schedule.none.msg')}</p>
+                    </div></div>`;
+                return;
+            }
+
+            subtitle.textContent = t('schedule.intro');
+            list.innerHTML = shown.map(def => {
+                const ev = events[def.key];
+                const chip = statusChip(ev.rsvp);
+                const hasPlusOne = plusOneInEvent(def.key);
+                const plusOneRsvp = hasPlusOne ? profile.plusOne.events[def.key].rsvp : null;
+
+                return `
+                <div class="sched-card" data-event="${def.key}">
+                    ${def.image ? `<div class="sched-banner"><img src="${def.image}" alt=""></div>` : ''}
+                    <div class="sched-card-body">
+                        <h2 class="section-title">${t(def.titleKey)}</h2>
+                        <button type="button" class="sched-status sched-status--${chip.cls}" data-toggle="${def.key}" title="${ev.rsvp ? t('schedule.rsvpUpdate') : t('schedule.rsvpToggle')}">${chip.label}</button>
+                        <ul class="sched-details">
+                            <li><span class="sched-detail-label">${t('ap.when.label')}</span> ${t(def.whenKey)}</li>
+                            <li><span class="sched-detail-label">${t('ap.where.label')}</span> ${t(def.whereKey)}</li>
+                        </ul>
+                        <p class="sched-desc">${t(def.descKey)}</p>
+                        <div class="sched-actions">
+                            <a class="sched-calendar" target="_blank" rel="noopener" href="${calHref(def.cal)}">${CAL_SVG}<span>${t('ap.calendar')}</span></a>
+                        </div>
+                        <div class="sched-rsvp hidden" data-rsvp="${def.key}">
+                            <p class="sched-rsvp-name">${profile.firstName} ${profile.lastName}</p>
+                            <div class="sched-rsvp-group">${optionRow('guest_' + def.key, 'guest', ev.rsvp)}</div>
+                            ${hasPlusOne ? `
+                            <p class="sched-rsvp-name">${profile.plusOne.firstName} ${profile.plusOne.lastName}</p>
+                            <div class="sched-rsvp-group">${optionRow('plus_' + def.key, 'plus', plusOneRsvp)}</div>` : ''}
+                            <button type="button" class="btn sched-save" data-save="${def.key}">${t('schedule.save')}</button>
+                            <p class="sched-save-note" data-note="${def.key}"></p>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+
+            wireCards();
+        }
+
+        function wireCards() {
+            document.querySelectorAll('.sched-status[data-toggle]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const key = btn.getAttribute('data-toggle');
+                    document.querySelector(`.sched-rsvp[data-rsvp="${key}"]`).classList.toggle('hidden');
+                });
+            });
+
+            document.querySelectorAll('.sched-save').forEach(btn => {
+                btn.addEventListener('click', () => saveRsvp(btn.getAttribute('data-save'), btn));
+            });
+        }
+
+        async function saveRsvp(key, btn) {
+            const card = document.querySelector(`.sched-rsvp[data-rsvp="${key}"]`);
+            const note = card.querySelector(`[data-note="${key}"]`);
+            const guestSel = card.querySelector(`input[name="guest_${key}"]:checked`);
+            if (!guestSel) { note.style.color = '#c62828'; note.textContent = t('schedule.status.respond'); return; }
+
+            const params = new URLSearchParams({
+                action: 'rsvpEvent',
+                event: key,
+                firstName: profile.firstName,
+                lastName: profile.lastName,
+                response: guestSel.value
+            });
+
+            const plusSel = card.querySelector(`input[name="plus_${key}"]:checked`);
+            if (plusSel && profile.plusOne) {
+                params.append('plusOneFirstName', profile.plusOne.firstName);
+                params.append('plusOneLastName', profile.plusOne.lastName);
+                params.append('plusOneResponse', plusSel.value);
+            }
+
+            const original = btn.textContent;
+            btn.textContent = t('schedule.saving');
+            btn.disabled = true;
+            note.textContent = '';
+
+            try {
+                const res = await fetch(`${API_URL}?${params.toString()}`);
+                const data = await res.json();
+                if (data.success) {
+                    // Update cached profile so chips/state reflect the new response
+                    profile.events[key].rsvp = guestSel.value;
+                    if (key === 'wedding') profile.events[key].attending = guestSel.value === 'Y';
+                    if (plusSel && profile.plusOne) {
+                        profile.plusOne.events[key].rsvp = plusSel.value;
+                        if (key === 'wedding') profile.plusOne.events[key].attending = plusSel.value === 'Y';
+                    }
+                    sessionStorage.setItem(GUEST_KEY, JSON.stringify(profile));
+                    note.style.color = '#2e7d32';
+                    note.textContent = t('schedule.saved');
+                    render();
+                } else {
+                    note.style.color = '#c62828';
+                    note.textContent = data.error || t('rsvp.genericError');
+                }
+            } catch (err) {
+                note.style.color = '#c62828';
+                note.textContent = t('rsvp.connectError');
+                console.error(err);
+            }
+
+            btn.textContent = original;
+            btn.disabled = false;
+        }
+
+        // Re-render on language change so dynamic content stays translated
+        document.addEventListener('langchange', render);
+        document.addEventListener('DOMContentLoaded', render);
+    </script>
+    <script src="clink.js"></script>
+</body>
+</html>

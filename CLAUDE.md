@@ -8,13 +8,15 @@ Static wedding website for Emily & Simo (July 24, 2026, La Rampolina, Stresa, It
 
 ## Architecture
 
-**Pages:** `index.html`, `our-story.html`, `travel.html`, `things-to-do.html`, `registry.html`, `faqs.html`, `rsvp.html`, `password.html`
+**Pages:** `index.html`, `our-story.html`, `travel.html`, `things-to-do.html`, `registry.html`, `faqs.html`, `schedule.html`, `welcome.html`. (`rsvp.html` and `aperitivo/index.html` are now thin redirects to `schedule.html`.)
 
-Every page (except `password.html`) loads `auth.js` as the first `<script>` in `<head>`, then `styles.css`, and `clink.js` just before `</body>`.
+Every gated page loads `auth.js` as the first `<script>` in `<head>`, then `styles.css`, then `lang.js` (deferred), and `clink.js` just before `</body>`. `welcome.html` is the entry page and does NOT load `auth.js`.
 
-**Auth flow:** `auth.js` is a self-invoking function that checks `sessionStorage` for `wedding_authenticated === 'true'`. If absent, it immediately redirects to `password.html`. The password page hashes input with SHA-256 via the Web Crypto API and compares against a stored hash — the plaintext password is never in the code.
+**Auth / identity flow:** Entry is a **name lookup**, not a password. `welcome.html` takes first + last name, calls the Apps Script `profile` action, and stores the returned guest profile as JSON in `sessionStorage['wedding_guest']`. `auth.js` checks for that profile; if absent it redirects to `welcome.html`. The profile holds the guest's per-event invite/RSVP status and plus-one, and is read by `schedule.html` and the home greeting (no extra API calls).
 
-**RSVP backend:** The RSVP page calls a **Google Apps Script** deployed as a web app. The script source is `google-apps-script-updated.js` — this file is not executed locally; changes must be manually copy-pasted into the Google Apps Script editor and redeployed. The script reads/writes a Google Sheet (ID in `SHEET_ID` constant) where the guest list lives. Guest lookup is by first+last name match; plus-ones are stored as columns on the primary guest's row.
+**Bilingual (EN/IT):** `lang.js` holds the full translation dictionary and engine. Elements use `data-i18n="key"` (swaps innerHTML) or `data-i18n-ph="key"` (placeholder). Preference saved in `localStorage['wedding_lang']`. `WeddingLang.t(key)` / `WeddingLang.tf(key, {vars})` are used by inline scripts; a `langchange` event fires on toggle so dynamic pages (schedule) re-render.
+
+**Events / RSVP backend:** `schedule.html` is a personalized itinerary — it reads the cached profile and renders only the events the guest is invited to (Lunch if Col Q=TRUE, Aperitivo if Col O=TRUE, Wedding if Col K=Y), each with a status chip and an inline per-event RSVP. It calls a **Google Apps Script** (`google-apps-script-updated.js`, source-only — copy into the Apps Script editor and redeploy). Actions: `profile` (full guest lookup) and `rsvpEvent` (per-event write). The script reads/writes a Google Sheet (`SHEET_ID`); guest lookup is by first+last name; plus-ones are separate rows with their own per-event flags.
 
 **Styling:** Single `styles.css` shared by all pages. CSS custom properties at `:root` define the two main colors (`--beige`, `--dark-blue`). Custom fonts (`Breezeblocks`, `Radiograph`, `MrsEaves`, `Modernist`) are loaded via `@font-face` from local font files.
 
@@ -30,9 +32,9 @@ Every page (except `password.html`) loads `auth.js` as the first `<script>` in `
 
 ## RSVP / Google Apps Script
 
-- The deployed Apps Script URL is hardcoded in `rsvp.html` as `API_URL`
-- Guest data starts at row 7 of the sheet (`DATA_START_ROW`); columns A/B = first/last name, K = RSVP response, L/M = plus-one first/last name
-- After editing `google-apps-script-updated.js`, redeploy from the Google Apps Script editor as a new deployment (or update the existing one) — the URL may change and must be updated in `rsvp.html`
+- The deployed Apps Script URL is hardcoded as `API_URL` in `welcome.html` and `schedule.html`
+- Guest data is rows 7–129 (`DATA_START_ROW`/`DATA_END_ROW`). Columns (0-based): A/B(0/1) names, K(10) wedding RSVP, L/M(11/12) plus-one names, O(14) aperitivo invited, P(15) aperitivo RSVP, Q(16) lunch invited, R(17) lunch RSVP. Invite flags are TRUE/FALSE; RSVPs are Y/N.
+- After editing `google-apps-script-updated.js`, redeploy by **updating the existing deployment** (Manage deployments → edit → new version) so the URL stays the same. **A redeploy is required before the new `profile`/`rsvpEvent` actions work** — without it, the name-lookup entry will fail for everyone.
 
 ## Deployment
 

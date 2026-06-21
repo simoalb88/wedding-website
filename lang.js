@@ -154,7 +154,7 @@ const I18N = {
         'ap.tryAgain': '← Try a different name',
         'ap.eyebrow': 'The Evening Before',
         'ap.title': 'Aperitivo on the Lake',
-        'ap.desc': "Join us for drinks and bites as we cruise around Lake Maggiore and the Borromean Islands. We'll set sail from Stresa as the sun goes down — a relaxed, festive way to kick off the wedding weekend together before the big day.",
+        'ap.desc': "Join us for drinks and bites as we cruise around Lake Maggiore and the Borromean Islands. The boat departs Stresa promptly at 6:00 PM, so please arrive a little early. A relaxed, festive way to kick off the wedding weekend together before the big day.",
         'ap.when.label': 'When:',
         'ap.when.val': 'Thursday, July 23 · 6:00–8:00 PM',
         'ap.where.label': 'Where:',
@@ -164,7 +164,47 @@ const I18N = {
         'ap.calendar': 'Add to calendar',
         'ap.msg.guestAccept': "We're so excited that {name} will be joining us on the lake!",
         'ap.msg.bothAccept': "We're so excited that {name} and {plusonefirst} will be joining us on the lake!",
-        'ap.msg.decline': "We're sorry you won't be able to make it, but we appreciate you letting us know. See you at the wedding!"
+        'ap.msg.decline': "We're sorry you won't be able to make it, but we appreciate you letting us know. See you at the wedding!",
+
+        // Navigation (events tab)
+        'nav.events': 'Events',
+
+        // Welcome / entry
+        'welcome.intro': 'Enter your name to see your invitation.',
+        'welcome.button': 'Continue',
+        'welcome.searching': 'Searching...',
+        'welcome.notFound': "We couldn't find that name. Please check the spelling, or reach out to Emily & Simo directly.",
+
+        // Home greeting ({name} filled in JS)
+        'greeting.hello': 'Welcome, {name}',
+
+        // Schedule / events
+        'schedule.title': 'The Weekend',
+        'schedule.intro': "Here's everything you're invited to.",
+        'schedule.thursday': 'Thursday',
+        'schedule.friday': 'Friday',
+        'schedule.status.going': "You're going",
+        'schedule.status.notGoing': "Can't make it",
+        'schedule.status.respond': 'RSVP needed',
+        'schedule.rsvpToggle': 'RSVP',
+        'schedule.rsvpUpdate': 'Update response',
+        'schedule.save': 'Save RSVP',
+        'schedule.saving': 'Saving...',
+        'schedule.saved': 'Saved',
+        'schedule.none.title': "We'll miss you",
+        'schedule.none.msg': "It looks like you've let us know you can't join us. If that's not right, please reach out to Emily & Simo.",
+
+        // Wedding card
+        'wedding.title': 'The Wedding',
+        'wedding.when': 'Friday, July 24 · 5:00 PM',
+        'wedding.where': 'La Rampolina, Stresa',
+        'wedding.desc': 'Perched in the hills above Stresa, La Rampolina opens onto sweeping views of Lake Maggiore and the Borromean Islands. We\'ll begin with the ceremony, followed by an aperitivo, dinner, and dancing under the stars — the celebration we\'ve been counting down to.',
+
+        // Welcome Lunch card
+        'lunch.title': 'Welcome Lunch',
+        'lunch.when': 'Thursday, July 23 · 12:30 PM',
+        'lunch.where': 'La Casera, Intra',
+        'lunch.desc': "An intimate lunch for the wedding party and immediate family at La Casera in Intra — a giant tagliere of local formaggi e salumi to share. Come hungry!"
     },
 
     it: {
@@ -314,7 +354,7 @@ const I18N = {
         'ap.tryAgain': '← Prova un altro nome',
         'ap.eyebrow': 'La Sera Prima',
         'ap.title': 'Aperitivo sul Lago',
-        'ap.desc': "Vi aspettiamo per un brindisi e qualche stuzzichino mentre navighiamo intorno al Lago Maggiore e alle Isole Borromee. Salperemo da Stresa al tramonto: un modo rilassato e festoso per iniziare insieme il weekend di nozze, prima del grande giorno.",
+        'ap.desc': "Vi aspettiamo per un brindisi e qualche stuzzichino mentre navighiamo intorno al Lago Maggiore e alle Isole Borromee. La barca parte da Stresa puntuale alle 18:00, quindi arrivate con un po' di anticipo. Un modo rilassato e festoso per iniziare insieme il weekend di nozze, prima del grande giorno.",
         'ap.when.label': 'Quando:',
         'ap.when.val': 'Giovedì 23 Luglio · 18:00–20:00',
         'ap.where.label': 'Dove:',
@@ -324,7 +364,47 @@ const I18N = {
         'ap.calendar': 'Aggiungi al calendario',
         'ap.msg.guestAccept': 'Siamo felicissimi che {name} si unirà a noi sul lago!',
         'ap.msg.bothAccept': 'Siamo felicissimi che {name} e {plusonefirst} si uniranno a noi sul lago!',
-        'ap.msg.decline': 'Ci dispiace che non possiate esserci, ma grazie per avercelo fatto sapere. Ci vediamo al matrimonio!'
+        'ap.msg.decline': 'Ci dispiace che non possiate esserci, ma grazie per avercelo fatto sapere. Ci vediamo al matrimonio!',
+
+        // Navigation (events tab)
+        'nav.events': 'Eventi',
+
+        // Welcome / entry
+        'welcome.intro': 'Inserisci il tuo nome per vedere il tuo invito.',
+        'welcome.button': 'Continua',
+        'welcome.searching': 'Ricerca...',
+        'welcome.notFound': "Non abbiamo trovato questo nome. Controlla l'ortografia oppure contatta direttamente Emily & Simo.",
+
+        // Home greeting ({name} filled in JS)
+        'greeting.hello': 'Ciao, {name}',
+
+        // Schedule / events
+        'schedule.title': 'Il Weekend',
+        'schedule.intro': 'Ecco tutti i tuoi eventi.',
+        'schedule.thursday': 'Giovedì',
+        'schedule.friday': 'Venerdì',
+        'schedule.status.going': 'Ci sarai',
+        'schedule.status.notGoing': 'Non ci sarai',
+        'schedule.status.respond': 'Da confermare',
+        'schedule.rsvpToggle': 'Rispondi',
+        'schedule.rsvpUpdate': 'Modifica risposta',
+        'schedule.save': 'Salva risposta',
+        'schedule.saving': 'Salvataggio...',
+        'schedule.saved': 'Salvato',
+        'schedule.none.title': 'Ci mancherai',
+        'schedule.none.msg': 'Sembra che tu ci abbia fatto sapere che non puoi esserci. Se non è così, contatta Emily & Simo.',
+
+        // Wedding card
+        'wedding.title': 'Il Matrimonio',
+        'wedding.when': 'Venerdì 24 Luglio · 17:00',
+        'wedding.where': 'La Rampolina, Stresa',
+        'wedding.desc': 'Immersa sulle colline sopra Stresa, La Rampolina si apre su una vista spettacolare sul Lago Maggiore e sulle Isole Borromee. Inizieremo con la cerimonia, seguita da aperitivo, cena e balli sotto le stelle: la festa che aspettiamo da tanto.',
+
+        // Welcome Lunch card
+        'lunch.title': 'Pranzo di Benvenuto',
+        'lunch.when': 'Giovedì 23 Luglio · 12:30',
+        'lunch.where': 'La Casera, Intra',
+        'lunch.desc': 'Un pranzo intimo per il corteo nuziale e i familiari più stretti da La Casera, a Intra: un grande tagliere di formaggi e salumi locali da condividere. Venite affamati!'
     }
 };
 

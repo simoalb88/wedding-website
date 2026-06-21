@@ -18,8 +18,11 @@ const COL_PLUS_ONE_FIRST = 11;      // Column L
 const COL_PLUS_ONE_LAST = 12;       // Column M
 const COL_APERITIVO_INVITED = 14;   // Column O (TRUE/FALSE)
 const COL_APERITIVO_RSVP = 15;      // Column P
+const COL_LUNCH_INVITED = 16;       // Column Q (TRUE/FALSE)
+const COL_LUNCH_RSVP = 17;          // Column R
 const DATA_START_ROW = 7;           // Row where guest data starts
 const DATA_END_ROW = 129;           // Last row of guest data
+const NUM_COLS = 18;                // Read through Column R
 
 function doGet(e) {
   const action = e.parameter.action;
@@ -33,6 +36,10 @@ function doGet(e) {
       return handleSearchAperitivo(e);
     } else if (action === 'rsvpAperitivo') {
       return handleRSVPAperitivo(e);
+    } else if (action === 'profile') {
+      return handleProfile(e);
+    } else if (action === 'rsvpEvent') {
+      return handleRSVPEvent(e);
     } else {
       return jsonResponse({ success: false, error: 'Invalid action' });
     }
@@ -374,6 +381,146 @@ View all responses in your Google Sheet.
     MailApp.sendEmail({ to: COUPLE_EMAIL, subject: subject, body: body });
   } catch (error) {
     console.error('Failed to send aperitivo notification email:', error);
+  }
+}
+
+// ============================================
+// UNIFIED MULTI-EVENT HANDLERS
+// ============================================
+
+// Build a per-event status object from a guest row
+function eventsForRow(row) {
+  return {
+    wedding: {
+      attending: (row[COL_RSVP] || '').toString().trim().toUpperCase() === 'Y',
+      rsvp: row[COL_RSVP] || null
+    },
+    aperitivo: {
+      invited: (row[COL_APERITIVO_INVITED] || '').toString().trim().toLowerCase() === 'true',
+      rsvp: row[COL_APERITIVO_RSVP] || null
+    },
+    lunch: {
+      invited: (row[COL_LUNCH_INVITED] || '').toString().trim().toLowerCase() === 'true',
+      rsvp: row[COL_LUNCH_RSVP] || null
+    }
+  };
+}
+
+function findRow(data, firstLower, lastLower) {
+  for (let i = 0; i < data.length; i++) {
+    const r = data[i];
+    if ((r[COL_FIRST_NAME] || '').toString().trim().toLowerCase() === firstLower &&
+        (r[COL_LAST_NAME]  || '').toString().trim().toLowerCase() === lastLower) {
+      return { row: r, index: i };
+    }
+  }
+  return null;
+}
+
+// Single lookup returning the guest's full profile across all events
+function handleProfile(e) {
+  const firstName = (e.parameter.firstName || '').trim().toLowerCase();
+  const lastName = (e.parameter.lastName || '').trim().toLowerCase();
+
+  const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
+  const data = sheet.getRange(DATA_START_ROW, 1, DATA_END_ROW - DATA_START_ROW + 1, NUM_COLS).getValues();
+
+  const match = findRow(data, firstName, lastName);
+  if (!match) {
+    return jsonResponse({ success: true, found: false });
+  }
+
+  const row = match.row;
+  const guest = {
+    firstName: row[COL_FIRST_NAME],
+    lastName: row[COL_LAST_NAME],
+    events: eventsForRow(row)
+  };
+
+  let plusOne = null;
+  const plusOneFirst = (row[COL_PLUS_ONE_FIRST] || '').toString().trim();
+  const plusOneLast = (row[COL_PLUS_ONE_LAST] || '').toString().trim();
+  if (plusOneFirst) {
+    const pMatch = findRow(data, plusOneFirst.toLowerCase(), plusOneLast.toLowerCase());
+    if (pMatch) {
+      plusOne = {
+        firstName: pMatch.row[COL_FIRST_NAME],
+        lastName: pMatch.row[COL_LAST_NAME],
+        events: eventsForRow(pMatch.row)
+      };
+    } else {
+      plusOne = { firstName: plusOneFirst, lastName: plusOneLast, events: null };
+    }
+  }
+
+  return jsonResponse({ success: true, found: true, guest: guest, plusOne: plusOne });
+}
+
+// Generic per-event RSVP write (event = wedding | lunch | aperitivo)
+function handleRSVPEvent(e) {
+  const event = (e.parameter.event || '').trim().toLowerCase();
+  const rsvpColByEvent = {
+    wedding: COL_RSVP,
+    aperitivo: COL_APERITIVO_RSVP,
+    lunch: COL_LUNCH_RSVP
+  };
+  const rsvpCol = rsvpColByEvent[event];
+  if (rsvpCol == null) return jsonResponse({ success: false, error: 'Invalid event' });
+
+  const firstName = (e.parameter.firstName || '').trim().toLowerCase();
+  const lastName = (e.parameter.lastName || '').trim().toLowerCase();
+  const response = e.parameter.response; // 'Y' or 'N'
+  const plusOneFirstName = (e.parameter.plusOneFirstName || '').trim().toLowerCase();
+  const plusOneLastName = (e.parameter.plusOneLastName || '').trim().toLowerCase();
+  const plusOneResponse = e.parameter.plusOneResponse || '';
+
+  const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
+  const data = sheet.getRange(DATA_START_ROW, 1, DATA_END_ROW - DATA_START_ROW + 1, NUM_COLS).getValues();
+
+  const match = findRow(data, firstName, lastName);
+  if (!match) return jsonResponse({ success: false, error: 'Guest not found' });
+
+  sheet.getRange(match.index + DATA_START_ROW, rsvpCol + 1).setValue(response);
+  const guestName = match.row[COL_FIRST_NAME] + ' ' + match.row[COL_LAST_NAME];
+
+  let plusOneName = null;
+  if (plusOneResponse && plusOneFirstName) {
+    const pMatch = findRow(data, plusOneFirstName, plusOneLastName);
+    if (pMatch) {
+      sheet.getRange(pMatch.index + DATA_START_ROW, rsvpCol + 1).setValue(plusOneResponse);
+      plusOneName = pMatch.row[COL_FIRST_NAME] + ' ' + pMatch.row[COL_LAST_NAME];
+    }
+  }
+
+  sendEventNotificationEmail(event, guestName, plusOneName, response, plusOneResponse);
+  return jsonResponse({ success: true });
+}
+
+function sendEventNotificationEmail(event, guestName, plusOneName, response, plusOneResponse) {
+  const eventLabel = { wedding: 'Wedding', lunch: 'Welcome Lunch', aperitivo: 'Boat Aperitivo' }[event] || event;
+  const plusOneText = plusOneName
+    ? `${plusOneName}: ${plusOneResponse === 'Y' ? 'Accepted' : 'Declined'}`
+    : 'No plus one';
+
+  const subject = `${eventLabel} RSVP: ${guestName} ${response === 'Y' ? 'is coming!' : 'can\'t make it'}`;
+  const body = `
+${eventLabel} RSVP Received!
+
+Guest: ${guestName}
+Response: ${response === 'Y' ? 'Accepted' : 'Declined'}
+
+Plus One: ${plusOneText}
+
+Submitted: ${new Date().toLocaleString()}
+
+---
+View all responses in your Google Sheet.
+  `.trim();
+
+  try {
+    MailApp.sendEmail({ to: COUPLE_EMAIL, subject: subject, body: body });
+  } catch (error) {
+    console.error('Failed to send event notification email:', error);
   }
 }
 

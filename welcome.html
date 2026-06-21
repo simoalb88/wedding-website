@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emily & Simo</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="lang.js" defer></script>
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .welcome-container {
+            text-align: center;
+            max-width: 420px;
+            width: 100%;
+        }
+
+        .welcome-logo {
+            font-family: 'Breezeblocks', Georgia, serif;
+            font-size: 6rem;
+            font-weight: normal;
+            margin-bottom: -0.5rem;
+            background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 6s ease-in-out infinite;
+        }
+
+        .welcome-date {
+            font-family: 'MrsEaves', 'Times New Roman', serif;
+            font-size: 1rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.7;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-intro {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.75rem;
+            opacity: 0.9;
+        }
+
+        .welcome-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .welcome-form input {
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            font-family: inherit;
+            border: 1px solid rgba(30, 58, 95, 0.2);
+            border-radius: 8px;
+            background: white;
+            color: var(--dark-blue);
+            text-align: center;
+            letter-spacing: 0.05em;
+        }
+
+        .welcome-form input:focus {
+            outline: none;
+            border-color: var(--dark-blue);
+        }
+
+        .welcome-form input::placeholder {
+            opacity: 0.5;
+        }
+
+        .welcome-error {
+            color: #c62828;
+            font-size: 0.9rem;
+            min-height: 1.5rem;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <h1 class="welcome-logo">Emily & Simo</h1>
+        <p class="welcome-date" data-i18n="pw.date">July 24, 2026 <span style="font-family: Arial, sans-serif;">·</span> Stresa, Italy</p>
+
+        <p class="welcome-intro" data-i18n="welcome.intro">Enter your name to see your invitation.</p>
+
+        <form class="welcome-form" id="welcome-form">
+            <input type="text" id="firstName" placeholder="First Name" data-i18n-ph="rsvp.firstName" autocomplete="given-name" autofocus required>
+            <input type="text" id="lastName" placeholder="Last Name" data-i18n-ph="rsvp.lastName" autocomplete="family-name" required>
+            <button type="submit" class="btn" id="welcome-btn" data-i18n="welcome.button">Continue</button>
+            <p class="welcome-error" id="welcome-error"></p>
+        </form>
+    </div>
+
+    <div class="lang-toggle" style="position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);">
+        <button type="button" data-set-lang="en">EN</button>
+        <span class="lang-sep">/</span>
+        <button type="button" data-set-lang="it">IT</button>
+    </div>
+
+    <script>
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzwe4UztcKqvBtKcsVOCCfIqBgkzNkmBT--5lRtZgwiH-hlESFlV7Lp6cm1RyRd8mbBeg/exec';
+        const GUEST_KEY = 'wedding_guest';
+
+        // Already identified? Skip straight in.
+        try {
+            const existing = JSON.parse(sessionStorage.getItem(GUEST_KEY) || 'null');
+            if (existing && existing.firstName) window.location.href = 'index.html';
+        } catch (e) {}
+
+        const form = document.getElementById('welcome-form');
+        const btn = document.getElementById('welcome-btn');
+        const errorEl = document.getElementById('welcome-error');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorEl.textContent = '';
+            const t = (k) => (window.WeddingLang ? window.WeddingLang.t(k) : '');
+            btn.textContent = t('welcome.searching') || 'Searching...';
+            btn.disabled = true;
+
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+
+            try {
+                const url = `${API_URL}?action=profile&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`;
+                const res = await fetch(url);
+                const data = await res.json();
+
+                if (data.success && data.found) {
+                    const clean = (p) => p ? {
+                        firstName: (p.firstName || '').toString().trim(),
+                        lastName: (p.lastName || '').toString().trim(),
+                        events: p.events
+                    } : null;
+                    const stored = clean(data.guest);
+                    stored.plusOne = clean(data.plusOne);
+                    sessionStorage.setItem(GUEST_KEY, JSON.stringify(stored));
+                    window.location.href = 'index.html';
+                    return;
+                } else if (data.success && !data.found) {
+                    errorEl.textContent = t('welcome.notFound') || "We couldn't find that name. Please check the spelling, or reach out to Emily & Simo.";
+                } else {
+                    errorEl.textContent = t('rsvp.genericError') || 'Something went wrong. Please try again.';
+                }
+            } catch (err) {
+                errorEl.textContent = t('rsvp.connectError') || 'Unable to connect. Please check your internet and try again.';
+                console.error(err);
+            }
+
+            btn.textContent = t('welcome.button') || 'Continue';
+            btn.disabled = false;
+        });
+    </script>
+    <script src="clink.js"></script>
+</body>
+</html>

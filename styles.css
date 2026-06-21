@@ -183,14 +183,14 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 2rem 3rem;
-    margin-top: -1rem;
+    padding: 1rem 2rem 3rem;
+    margin-top: 0;
 }
 
 .hero {
     text-align: center;
     width: 100%;
-    max-width: 1000px;
+    max-width: 1125px;
 }
 
 .hero-image-wrapper {
@@ -198,10 +198,9 @@ main {
 }
 
 .hero-image {
-    width: 100vw;
-    max-width: 1500px;
+    width: 100%;
+    max-width: 1125px;
     height: auto;
-    /* Let transparency show through to beige background */
     display: block;
     margin-left: auto;
     margin-right: auto;

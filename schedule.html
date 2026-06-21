@@ -123,6 +123,13 @@
             margin-bottom: 1.5rem;
         }
 
+        .sched-ferry {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            opacity: 0.85;
+            margin-bottom: 1.5rem;
+        }
+
         .sched-actions {
             display: flex;
             flex-direction: column;
@@ -237,9 +244,9 @@
         const EVENTS = [
             {
                 key: 'lunch', image: 'Casera01.jpg', pos: 'center 73%',
-                titleKey: 'lunch.title', whenKey: 'lunch.when', whereKey: 'lunch.where', descKey: 'lunch.desc',
+                titleKey: 'lunch.title', whenKey: 'lunch.when', whereKey: 'lunch.where', descKey: 'lunch.desc', ferryKey: 'lunch.ferry',
                 visible: (ev) => ev && ev.invited,
-                cal: { text: 'Emily & Simo - Welcome Lunch', dates: '20260723T123000/20260723T143000', location: 'La Casera, Intra, Italy' }
+                cal: { text: 'Emily & Simo - Welcome Lunch', dates: '20260723T121500/20260723T143000', location: 'La Casera, Intra, Italy' }
             },
             {
                 key: 'aperitivo', image: '/aperitivo/Ape_03.jpg', pos: 'center 69%',
@@ -333,6 +340,7 @@
                             <li><span class="sched-detail-label">${t('ap.where.label')}</span> ${t(def.whereKey)}</li>
                         </ul>
                         <p class="sched-desc">${t(def.descKey)}</p>
+                        ${def.ferryKey ? `<div class="sched-ferry">${t(def.ferryKey)}</div>` : ''}
                         <div class="sched-actions">
                             <a class="sched-calendar" target="_blank" rel="noopener" href="${calHref(def.cal)}">${CAL_SVG}<span>${t('ap.calendar')}</span></a>
                         </div>

@@ -379,6 +379,22 @@
             const guestSel = card.querySelector(`input[name="guest_${key}"]:checked`);
             if (!guestSel) { note.style.color = '#c62828'; note.textContent = t('schedule.status.respond'); return; }
 
+            // Planner/demo guest: simulate a successful save without touching the Google Sheet
+            if (profile.demo) {
+                profile.events[key].rsvp = guestSel.value;
+                if (key === 'wedding') profile.events[key].attending = guestSel.value === 'Y';
+                const plusSelDemo = card.querySelector(`input[name="plus_${key}"]:checked`);
+                if (plusSelDemo && profile.plusOne) {
+                    profile.plusOne.events[key].rsvp = plusSelDemo.value;
+                    if (key === 'wedding') profile.plusOne.events[key].attending = plusSelDemo.value === 'Y';
+                }
+                sessionStorage.setItem(GUEST_KEY, JSON.stringify(profile));
+                note.style.color = '#2e7d32';
+                note.textContent = t('schedule.saved');
+                render();
+                return;
+            }
+
             const params = new URLSearchParams({
                 action: 'rsvpEvent',
                 event: key,

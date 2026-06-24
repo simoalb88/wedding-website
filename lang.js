@@ -214,16 +214,16 @@ const I18N = {
         'nav.faqs': 'FAQ',
 
         // Footer
-        'footer.details': '24 Luglio 2026 · Stresa, Italia',
+        'footer.details': '24 luglio 2026 · Stresa, Italia',
 
         // Home
-        'home.datetime': '24 Luglio 2026 <span class="at">alle</span> 17:00',
+        'home.datetime': '24 luglio 2026 <span class="at">alle</span> 17:00',
         'home.location': 'Stresa, Italia',
 
         // Password
         'pw.placeholder': 'Inserisci la password',
         'pw.button': 'Entra',
-        'pw.date': '24 Luglio 2026 <span style="font-family: Arial, sans-serif;">·</span> Stresa, Italia',
+        'pw.date': '24 luglio 2026 <span style="font-family: Arial, sans-serif;">·</span> Stresa, Italia',
         'pw.error': 'Password errata. Riprova.',
 
         // Our Story
@@ -347,7 +347,7 @@ const I18N = {
         'ap.title': 'Aperitivo sul Lago',
         'ap.desc': "Vi aspettiamo per un brindisi e qualche stuzzichino mentre navighiamo intorno al Lago Maggiore e alle Isole Borromee. <strong>La barca parte da Stresa puntuale alle 18:00, quindi arrivate con un po' di anticipo.</strong> Un modo rilassato e festoso per iniziare insieme il weekend di nozze, prima del grande giorno.",
         'ap.when.label': 'Quando:',
-        'ap.when.val': 'Giovedì 23 Luglio · 18:00–20:00',
+        'ap.when.val': 'Giovedì 23 luglio · 18:00–20:00',
         'ap.where.label': 'Dove:',
         'ap.where.val': 'Ritrovo a Stresa (TBD)',
         'ap.what.label': 'Cosa:',
@@ -387,13 +387,13 @@ const I18N = {
 
         // Wedding card
         'wedding.title': 'Il Matrimonio',
-        'wedding.when': 'Venerdì 24 Luglio · 17:00',
+        'wedding.when': 'Venerdì 24 luglio · 17:00',
         'wedding.where': 'La Rampolina, Stresa',
         'wedding.desc': 'Immersa sulle colline sopra Stresa, La Rampolina si apre su una vista spettacolare sul Lago Maggiore e sulle Isole Borromee. Inizieremo con la cerimonia in giardino, seguita da aperitivo, cena e balli sotto le stelle: la festa che aspettiamo da tanto.',
 
         // Welcome Lunch card
         'lunch.title': 'Pranzo di Benvenuto',
-        'lunch.when': 'Giovedì 23 Luglio · 12:15',
+        'lunch.when': 'Giovedì 23 luglio · 12:15',
         'lunch.where': 'La Casera, Intra',
         'lunch.desc': 'Un pranzo intimo per il corteo nuziale, gli accompagnatori e i familiari più stretti da La Casera, a Intra: un grande tagliere di salumi e formaggi locali da condividere.',
         'lunch.ferry': 'Spostarsi in battello: Stresa → Intra parte alle 11:00; il ritorno da Intra → Stresa è alle 14:30 (2:30 PM) o 15:25 (3:25 PM). Circa 45–60 minuti a tratta — controllate gli orari dei battelli prima di partire.'

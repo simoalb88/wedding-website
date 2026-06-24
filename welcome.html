@@ -131,6 +131,24 @@
             const firstName = document.getElementById('firstName').value.trim();
             const lastName = document.getElementById('lastName').value.trim();
 
+            // Wedding-planner preview: entering this name loads a full Italian demo
+            // (invited to all events) that is NOT connected to the Google Sheet, so
+            // nothing the planner clicks can change real guest data.
+            if (firstName.toLowerCase() === 'elisabetta' && lastName.toLowerCase() === 'zucchi') {
+                localStorage.setItem('wedding_lang', 'it');
+                sessionStorage.setItem(GUEST_KEY, JSON.stringify({
+                    firstName: 'Elisabetta', lastName: 'Zucchi', demo: true,
+                    events: {
+                        wedding:   { attending: true, rsvp: ''  },
+                        aperitivo: { invited: true,  rsvp: ''  },
+                        lunch:     { invited: true,  rsvp: ''  }
+                    },
+                    plusOne: null
+                }));
+                window.location.href = 'schedule.html';
+                return;
+            }
+
             try {
                 const url = `${API_URL}?action=profile&firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}`;
                 const res = await fetch(url);
